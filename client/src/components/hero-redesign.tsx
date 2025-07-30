@@ -30,7 +30,7 @@ export default function HeroRedesign() {
       {/* Hero Image Background - Large like Simply Chocolate */}
       <div className="absolute inset-0">
         <img 
-          src="https://images.unsplash.com/photo-1629198688000-71f23e745b6e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&h=1080"
+          src="/attached_assets/pexels-3170155-9462365_1753910576699.jpg"
           alt="CleanSip Premium Strohhalme - Zuverlässig seit jeher"
           className="w-full h-full object-cover"
         />

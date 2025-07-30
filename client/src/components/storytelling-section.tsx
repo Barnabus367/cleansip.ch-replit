@@ -52,8 +52,8 @@ export default function StorytellingSection() {
             <FadeInSection delay={0.6}>
               <div className="relative">
                 <img 
-                  src="https://images.unsplash.com/photo-1544427920-c49ccfb85579?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600"
-                  alt="CleanSip Produktion - Schweizer Qualität"
+                  src="/attached_assets/pexels-davidmceachan-90911_1753910576699.jpg"
+                  alt="CleanSip Strohhalme - Vielfalt und Qualität"
                   className="rounded-2xl shadow-2xl w-full"
                 />
                 <div className="absolute -bottom-6 -left-6 bg-brand-primary text-black p-6 rounded-xl shadow-lg">

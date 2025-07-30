@@ -158,7 +158,7 @@ export default function FeaturedProduct() {
             <div className="relative">
               <ScaleOnHover>
                 <img 
-                  src={product.images?.[0]?.url || "https://images.unsplash.com/photo-1629198688000-71f23e745b6e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600"} 
+                  src={product.images?.[0]?.url || "/attached_assets/Produktbild-schwarzer-Strohhalm_1753910576700.jpg"} 
                   alt={product.images?.[0]?.altText || `${product.title} - CleanSip Premium Strohhalme`}
                   className="rounded-xl shadow-lg w-full h-auto"
                   loading="lazy"
