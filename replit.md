@@ -77,10 +77,14 @@ Currently supports one live product with plans for expansion:
 
 ## External Dependencies
 
-### Shopify Integration (Planned)
-- **Storefront API**: GraphQL integration for product management
-- **Environment Variables**: Store domain and API tokens configured
-- **Product Sync**: Future integration for inventory and pricing
+### Shopify Integration (LIVE)
+- **Storefront API**: Active GraphQL integration with real product data from user's Shopify store
+- **Environment Variables**: SHOPIFY_STORE_DOMAIN and SHOPIFY_STOREFRONT_ACCESS_TOKEN configured via secrets
+- **Single Product Focus**: System optimized for one product with multiple color variants as specified
+- **API Endpoints**: `/api/shopify/products` and `/api/shopify/products/:handle` serving real-time data
+- **Color Variants**: Automatic detection and organization of product variants by color options
+- **CleanSip Enhancement**: Real Shopify data enhanced with rebellious branding and Swiss pricing
+- **Current Product**: "plastik-strohhalm" successfully loaded with variant data
 
 ### Development Tools
 - **Replit Integration**: Special development environment support
