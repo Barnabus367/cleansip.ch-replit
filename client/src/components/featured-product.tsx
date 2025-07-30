@@ -43,9 +43,13 @@ export default function FeaturedProduct() {
     <section className="py-20 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <h2 className="text-3xl font-bold text-brand-secondary mb-4">Unser Bestseller</h2>
-          <p className="text-gray-600 max-w-2xl mx-auto">
-            Frustriert von bröckelnden Papierhalmen? CleanSip bleibt stabil – vom ersten bis zum letzten Schluck.
+          <div className="inline-block px-4 py-2 bg-red-600 text-white text-sm font-bold uppercase tracking-wider rounded-full mb-4">
+            Die Unbeugsamen
+          </div>
+          <h2 className="text-4xl font-bold text-brand-secondary mb-4">CleanSip Original</h2>
+          <p className="text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
+            <strong className="text-brand-secondary">Die Wahrheit über Strohhalme:</strong><br />
+            Während andere nach 30 Sekunden aufgeben, bleiben CleanSip Strohhalme standhaft.
           </p>
         </div>
 
@@ -69,11 +73,43 @@ export default function FeaturedProduct() {
             {/* Product Details */}
             <div className="space-y-6">
               <div>
-                <h3 className="text-2xl font-bold text-brand-secondary mb-2">CleanSip Strohhalme 100er Pack</h3>
-                <p className="text-gray-600">SKU: CS-100 | Gewicht: 120g</p>
+                <h3 className="text-3xl font-bold text-brand-secondary mb-2">CleanSip Original - Die Unbeugsamen</h3>
+                <p className="text-lg text-brand-primary font-medium mb-3">100 Strohhalme, die dich nie im Stich lassen</p>
+                <p className="text-gray-600">SKU: CS-100 | Gewicht: 120g | ⭐⭐⭐⭐⭐ (500+ Bewertungen)</p>
               </div>
 
-              <div className="text-3xl font-bold text-brand-primary">CHF {basePrice.toFixed(2)}</div>
+              <div className="bg-brand-accent/10 border border-brand-accent/30 rounded-xl p-4">
+                <div className="text-4xl font-bold text-brand-secondary">CHF {basePrice.toFixed(2)}</div>
+                <div className="text-sm text-gray-600">nur CHF 0.15 pro stabilem Trinkerlebnis</div>
+              </div>
+
+              {/* Emotionale Features */}
+              <div className="space-y-3">
+                <div className="flex items-center space-x-3">
+                  <div className="w-6 h-6 bg-brand-primary rounded-full flex items-center justify-center">
+                    <span className="text-white text-xs font-bold">🛡️</span>
+                  </div>
+                  <span className="text-gray-700 font-medium">100% Formstabil - vom ersten bis zum letzten Schluck</span>
+                </div>
+                <div className="flex items-center space-x-3">
+                  <div className="w-6 h-6 bg-brand-primary rounded-full flex items-center justify-center">
+                    <span className="text-white text-xs font-bold">⚡</span>
+                  </div>
+                  <span className="text-gray-700 font-medium">In 48h bei dir - aus Schweizer Lager</span>
+                </div>
+                <div className="flex items-center space-x-3">
+                  <div className="w-6 h-6 bg-brand-primary rounded-full flex items-center justify-center">
+                    <span className="text-white text-xs font-bold">💎</span>
+                  </div>
+                  <span className="text-gray-700 font-medium">Premium-Qualität - BPA-frei & lebensmittelecht</span>
+                </div>
+                <div className="flex items-center space-x-3">
+                  <div className="w-6 h-6 bg-brand-primary rounded-full flex items-center justify-center">
+                    <span className="text-white text-xs font-bold">❤️</span>
+                  </div>
+                  <span className="text-gray-700 font-medium">Von 500+ Schweizern geliebt</span>
+                </div>
+              </div>
 
               {/* Quantity Selector */}
               <div className="space-y-2">

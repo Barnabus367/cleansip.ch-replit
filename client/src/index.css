@@ -93,3 +93,15 @@
 .bg-brand-neutral {
   background-color: #F9FAFB;
 }
+
+/* Confetti Animation */
+@keyframes fall {
+  0% {
+    transform: translateY(-100vh) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh) rotate(720deg);
+    opacity: 0;
+  }
+}

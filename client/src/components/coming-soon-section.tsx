@@ -8,30 +8,39 @@ import { apiRequest } from "@/lib/queryClient";
 const comingSoonProducts = [
   {
     id: "PC-50",
-    name: "Classic Party Cups 50er Pack",
-    description: "Robuste PP-Becher für jede Feier",
+    name: "Party Cups Deluxe",
+    description: "Becher, die nicht knicken",
     price: "CHF 12.90",
     weight: "500g",
+    releaseDate: "Q2 2025",
+    notifyCount: 342,
+    teaser: "Nie wieder enttäuschte Partygäste",
     imageUrl: "https://images.unsplash.com/photo-1530103862676-de8c9debad1d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&h=300",
-    alt: "Classic Party Cups 50er Pack"
+    alt: "Party Cups Deluxe 50er Pack"
   },
   {
     id: "PS-100",
-    name: "Pro Stirrer 100er Pack",
-    description: "100 holzfreie Rührstäbchen",
+    name: "Pro Stirrer Platinum",
+    description: "Rührstäbchen mit Stil",
     price: "CHF 5.90",
     weight: "150g",
+    releaseDate: "Q2 2025",
+    notifyCount: 278,
+    teaser: "Für perfekt gemischte Drinks",
     imageUrl: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&h=300",
-    alt: "Pro Stirrer 100er Pack Rührstäbchen"
+    alt: "Pro Stirrer Platinum 100er Pack"
   },
   {
     id: "FB-40",
-    name: "Flex Fork & Knife 40er Kit",
-    description: "Kunststoff-Besteck-Kit",
+    name: "Flex Cutlery Elite",
+    description: "Besteck ohne Kompromisse",
     price: "CHF 9.80",
     weight: "300g",
+    releaseDate: "Q3 2025",
+    notifyCount: 156,
+    teaser: "Eleganz trifft Funktionalität",
     imageUrl: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&h=300",
-    alt: "Flex Fork & Knife 40er Kit Besteck"
+    alt: "Flex Cutlery Elite 40er Kit"
   }
 ];
 
@@ -74,26 +83,63 @@ export default function ComingSoonSection() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-          {comingSoonProducts.map((product) => (
-            <div key={product.id} className="relative bg-white rounded-2xl p-6 shadow-lg overflow-hidden">
-              <div className="absolute inset-0 bg-gray-900 bg-opacity-10 backdrop-blur-sm z-10 flex items-center justify-center">
+          {comingSoonProducts.map((product, index) => (
+            <div key={product.id} className="group relative bg-white rounded-2xl p-6 shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-500">
+              {/* Blur Overlay with Hover Reveal */}
+              <div className="absolute inset-0 bg-gradient-to-br from-brand-secondary/80 to-black/60 backdrop-blur-sm z-10 flex items-center justify-center group-hover:opacity-0 transition-opacity duration-500">
                 <div className="text-center text-white">
-                  <Clock className="mx-auto h-8 w-8 mb-2" />
-                  <div className="font-semibold">Coming Soon</div>
+                  <Clock className="mx-auto h-12 w-12 mb-4 text-brand-primary" />
+                  <div className="font-bold text-lg mb-2">Bald verfügbar</div>
+                  <div className="text-sm text-brand-accent">{product.releaseDate}</div>
                 </div>
               </div>
               
-              <img 
-                src={product.imageUrl} 
-                alt={product.alt}
-                className="w-full h-48 object-cover rounded-lg mb-4"
-              />
-              
-              <h3 className="text-xl font-bold text-brand-secondary mb-2">{product.name}</h3>
-              <p className="text-gray-600 mb-3">{product.description}</p>
-              <div className="flex justify-between items-center">
-                <span className="text-lg font-bold text-brand-primary">{product.price}</span>
-                <span className="text-sm text-gray-500">{product.id} | {product.weight}</span>
+              {/* Product Content */}
+              <div className="group-hover:blur-none blur-sm transition-all duration-500">
+                <img 
+                  src={product.imageUrl} 
+                  alt={product.alt}
+                  className="w-full h-48 object-cover rounded-lg mb-4"
+                />
+                
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between">
+                    <div className="inline-block px-2 py-1 bg-brand-primary/10 text-brand-primary text-xs font-bold rounded">
+                      #{index + 2} in Pipeline
+                    </div>
+                    <div className="text-xs text-gray-500 flex items-center">
+                      <Bell className="w-3 h-3 mr-1" />
+                      {product.notifyCount} warten bereits
+                    </div>
+                  </div>
+                  
+                  <h3 className="text-xl font-bold text-brand-secondary">{product.name}</h3>
+                  <p className="text-brand-primary font-medium italic">"{product.teaser}"</p>
+                  <p className="text-gray-600">{product.description}</p>
+                  
+                  <div className="flex justify-between items-center pt-2">
+                    <span className="text-lg font-bold text-brand-primary">{product.price}</span>
+                    <span className="text-sm text-gray-500">{product.id} | {product.weight}</span>
+                  </div>
+                  
+                  {/* Features Preview */}
+                  <div className="border-t border-gray-200 pt-3">
+                    <div className="text-xs text-gray-600 space-y-1">
+                      <div className="flex items-center">
+                        <div className="w-2 h-2 bg-green-500 rounded-full mr-2" />
+                        Gleiche CleanSip Qualität
+                      </div>
+                      <div className="flex items-center">
+                        <div className="w-2 h-2 bg-green-500 rounded-full mr-2" />
+                        48h Lieferung garantiert
+                      </div>
+                      <div className="flex items-center">
+                        <div className="w-2 h-2 bg-green-500 rounded-full mr-2" />
+                        Swiss Engineering
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           ))}

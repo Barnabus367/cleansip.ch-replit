@@ -3,10 +3,13 @@ import { Link, useLocation } from "wouter";
 import { ShoppingCart, Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { useToast } from "@/hooks/use-toast";
 
 export default function Header() {
   const [location] = useLocation();
   const [cartItemCount, setCartItemCount] = useState(0);
+  const [logoClickCount, setLogoClickCount] = useState(0);
+  const { toast } = useToast();
 
   const navigation = [
     { name: "Home", href: "/" },
@@ -16,6 +19,46 @@ export default function Header() {
     { name: "Besteck", href: "/coming-soon" },
   ];
 
+  const handleLogoClick = () => {
+    const newCount = logoClickCount + 1;
+    setLogoClickCount(newCount);
+    
+    if (newCount === 5) {
+      // Reset counter
+      setLogoClickCount(0);
+      
+      // Confetti effect simulation
+      toast({
+        title: "🎉 Du hast die geheime Strohhalm-Party gefunden!",
+        description: "Hier ist ein spezieller 10% Rabatt-Code: REBEL10",
+      });
+      
+      // Add some visual celebration
+      const confettiColors = ['#00BFA6', '#003B46', '#FFD54F'];
+      for (let i = 0; i < 10; i++) {
+        setTimeout(() => {
+          const confetti = document.createElement('div');
+          confetti.style.position = 'fixed';
+          confetti.style.left = Math.random() * 100 + 'vw';
+          confetti.style.top = '-10px';
+          confetti.style.width = '10px';
+          confetti.style.height = '10px';
+          confetti.style.backgroundColor = confettiColors[Math.floor(Math.random() * confettiColors.length)];
+          confetti.style.borderRadius = '50%';
+          confetti.style.zIndex = '9999';
+          confetti.style.animation = 'fall 3s linear forwards';
+          confetti.style.pointerEvents = 'none';
+          
+          document.body.appendChild(confetti);
+          
+          setTimeout(() => {
+            document.body.removeChild(confetti);
+          }, 3000);
+        }, i * 100);
+      }
+    }
+  };
+
   return (
     <header className="bg-white shadow-sm sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -23,11 +66,11 @@ export default function Header() {
           {/* Logo */}
           <div className="flex items-center">
             <Link href="/">
-              <a className="flex items-center space-x-2">
-                <div className="w-8 h-8 bg-brand-primary rounded-full flex items-center justify-center">
+              <a className="flex items-center space-x-2" onClick={handleLogoClick}>
+                <div className="w-8 h-8 bg-brand-primary rounded-full flex items-center justify-center hover:scale-110 transition-transform duration-200">
                   <span className="text-white font-bold text-sm">CS</span>
                 </div>
-                <span className="text-xl font-bold text-brand-secondary">CleanSip</span>
+                <span className="text-xl font-bold text-brand-secondary hover:text-brand-primary transition-colors duration-200">CleanSip</span>
               </a>
             </Link>
           </div>

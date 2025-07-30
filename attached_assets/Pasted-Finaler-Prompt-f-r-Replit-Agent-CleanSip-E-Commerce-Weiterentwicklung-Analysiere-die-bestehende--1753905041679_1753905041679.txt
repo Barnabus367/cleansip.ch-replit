@@ -1,0 +1,227 @@
+Finaler Prompt für Replit Agent (CleanSip E-Commerce Weiterentwicklung):
+
+Analysiere die bestehende CleanSip E-Commerce-Applikation und implementiere ein emotionales Brand-Storytelling-Upgrade. Die Marke positioniert sich als rebellische Alternative zu "matschigen Öko-Produkten" für frustrierte Konsumenten (20-55 Jahre).
+Ausgangslage:
+
+React + Express.js mit TypeScript, Tailwind CSS, shadcn/ui
+Drizzle ORM mit PostgreSQL
+Produkt CS-100 bereits vorhanden
+Mock-Daten-System funktioniert
+Newsletter-Funktionalität existiert
+
+Deine Aufgaben:
+1. Homepage Hero-Transformation (client/src/pages/home.tsx)
+Erstelle eine neue Hero-Section mit:
+tsx// Neue Komponente: HeroWithStory.tsx
+- Hauptheadline: "SCHLUSS MIT AUFGEWEICHTEN TRÄUMEN"
+- Subline: "CleanSip bringt dir Strohhalme zurück, die durchhalten"
+- Animierter Counter: "Bereits 4'827 Schweizer trinken wieder mit Stil"
+- Split-Screen Design:
+  - Links: Dramatisches Bild eines zerfallenden Papierstrohhalms
+  - Rechts: Kristallklarer CleanSip Strohhalm in Premium-Cocktail
+- CTA-Buttons: "Rebellion starten" + "Manifest lesen"
+- Subtle Animation: Papierstrohhalm "schmilzt" beim Scrollen
+2. Manifest-Seite (neue Route: /manifest)
+tsx// client/src/pages/manifest.tsx
+export function ManifestPage() {
+  return (
+    <div className="max-w-4xl mx-auto py-16 px-4">
+      <h1 className="text-5xl font-bold text-secondary mb-8">
+        Das CleanSip Manifest
+      </h1>
+      <div className="prose prose-lg">
+        <p className="lead">
+          Wir glauben an Strohhalme, die nicht kapitulieren.
+        </p>
+        <h2>Unsere Mission</h2>
+        <p>
+          Während die Welt auf Pappe kaut, liefern wir Stabilität.
+          Keine Kompromisse. Keine Ausreden. Nur funktionierende Produkte.
+        </p>
+        <h2>Für wen wir da sind</h2>
+        <ul>
+          <li>Bar-Profis, die auf Qualität setzen</li>
+          <li>Eltern, die keine Tränen wollen</li>
+          <li>Alle, die es satt haben, gegen ihren Strohhalm zu kämpfen</li>
+        </ul>
+        <CallToAction />
+      </div>
+    </div>
+  );
+}
+3. Produkt-Storytelling erweitern
+In shared/mock-data.ts die Produktbeschreibungen emotionalisieren:
+typescriptexport const mockProducts = [
+  {
+    id: 'CS-100',
+    title: 'CleanSip Original - Die Unbeugsamen',
+    subtitle: '100 Strohhalme, die dich nie im Stich lassen',
+    descriptionHtml: `
+      <p><strong>Die Wahrheit über Strohhalme:</strong></p>
+      <p>Während andere nach 30 Sekunden aufgeben, bleiben CleanSip Strohhalme standhaft. 
+      Entwickelt für Menschen, die keine Lust auf Kompromisse haben.</p>
+      <ul>
+        <li>🛡️ 100% Formstabil - vom ersten bis zum letzten Schluck</li>
+        <li>⚡ In 48h bei dir - aus Schweizer Lager</li>
+        <li>💎 Premium-Qualität - BPA-frei & lebensmittelecht</li>
+        <li>🎯 Fair - nur CHF 0.15 pro stabilem Trinkerlebnis</li>
+      </ul>
+    `,
+    features: [
+      { icon: 'Shield', text: 'Garantiert kein Aufweichen' },
+      { icon: 'Zap', text: 'Sofort einsatzbereit' },
+      { icon: 'Heart', text: 'Von 500+ Schweizern geliebt' }
+    ]
+  }
+];
+4. Social Proof Widget (client/src/components/SocialProof.tsx)
+tsxexport function SocialProofWidget() {
+  const [count, setCount] = useState(2847);
+  
+  useEffect(() => {
+    // Simuliere Live-Updates
+    const interval = setInterval(() => {
+      setCount(prev => prev + Math.floor(Math.random() * 3));
+    }, 5000);
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <div className="fixed bottom-4 right-4 bg-white border-2 border-black shadow-lg p-4 rounded-lg">
+      <div className="flex items-center gap-3">
+        <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
+        <p className="text-sm font-medium">
+          <span className="font-bold text-primary">{count.toLocaleString('de-CH')}</span>
+          {' '}Schweizer trinken stabil
+        </p>
+      </div>
+    </div>
+  );
+}
+5. Newsletter-Popup mit Personality
+Erweitere NewsletterPopup.tsx:
+tsx// Neue Headlines für A/B Testing
+const headlines = [
+  "Schluss mit Papierfrust – hol dir Updates",
+  "Werde Teil der Stabilitäts-Revolution",
+  "Erste News, wenn neue Produkte kommen"
+];
+
+// Benefit-Liste
+const benefits = [
+  "Exklusive Rabatte für Rebellen",
+  "Neue Produkte vor allen anderen",
+  "Tips für frustfreie Parties"
+];
+6. Interaktive Features
+Easter Egg im Header:
+tsx// Bei 5x Klick auf Logo
+const handleLogoClick = () => {
+  clickCount++;
+  if (clickCount === 5) {
+    confetti({
+      particleCount: 100,
+      spread: 70,
+      origin: { y: 0.6 },
+      colors: ['#00BFA6', '#003B46', '#FFD54F']
+    });
+    toast("🎉 Du hast die geheime Strohhalm-Party gefunden!");
+  }
+};
+Scroll-Triggered Animations:
+tsx// In home.tsx
+const { ref, inView } = useInView({
+  threshold: 0.3,
+  triggerOnce: true
+});
+
+<div ref={ref} className={cn(
+  "transition-all duration-1000",
+  inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+)}>
+  {/* Content */}
+</div>
+7. Cart mit Persönlichkeit
+Erweitere CartSheet.tsx:
+tsx// Leerer Warenkorb
+<EmptyCartMessage>
+  <h3>Dein Korb ist leer 😔</h3>
+  <p>Zeit, das zu ändern und der Papier-Tyrannei zu entkommen!</p>
+  <Button onClick={() => navigate('/')}>
+    Zur Strohhalm-Revolution
+  </Button>
+</EmptyCartMessage>
+
+// Shipping Threshold Message
+{cartTotal < 50 && (
+  <Alert>
+    <AlertDescription>
+      Nur noch CHF {(50 - cartTotal).toFixed(2)} bis zum Gratisversand!
+      Gönn dir Stabilität ohne Versandkosten.
+    </AlertDescription>
+  </Alert>
+)}
+8. Coming Soon Produkte visualisieren
+Neue Komponente ComingSoonGrid.tsx:
+tsxconst upcomingProducts = [
+  {
+    id: 'PC-50',
+    name: 'Party Cups Deluxe',
+    teaser: 'Becher, die nicht knicken',
+    releaseDate: 'Q2 2025',
+    notifyCount: 342
+  },
+  // ... weitere Produkte
+];
+
+// Blur-Effekt mit Hover-Reveal
+<div className="group relative">
+  <div className="blur-sm group-hover:blur-none transition-all">
+    <ProductCard {...product} />
+  </div>
+  <div className="absolute inset-0 flex items-center justify-center">
+    <Badge>Bald verfügbar</Badge>
+  </div>
+</div>
+9. Testimonials mit Schweizer Touch
+tsxconst testimonials = [
+  {
+    name: "Marco S., Zürich",
+    role: "Barkeeper",
+    text: "Endlich Strohhalme, die einen ganzen Mojito überleben!",
+    rating: 5
+  },
+  {
+    name: "Sandra M., Basel", 
+    role: "Event-Managerin",
+    text: "Meine Gäste beschweren sich nie mehr. CleanSip rettet Events!",
+    rating: 5
+  }
+];
+10. Performance & Analytics
+Implementiere Tracking für:
+typescript// server/analytics.ts
+export const trackEvent = (event: string, properties?: any) => {
+  // Plausible oder PostHog Integration
+  console.log(`[Analytics] ${event}`, properties);
+  
+  // Speichere in DB für interne Metriken
+  db.insert(analyticsEvents).values({
+    event,
+    properties,
+    timestamp: new Date()
+  });
+};
+
+// Usage
+trackEvent('rebellion_started', { product: 'CS-100' });
+trackEvent('manifest_read', { timeSpent: 45 });
+Technische Anforderungen:
+
+Mobile-first Development
+Lighthouse Score >90
+Alle Animationen mit prefers-reduced-motion respektieren
+TypeScript strict mode einhalten
+Tailwind-Klassen konsistent nutzen
+
+Beginne mit der Hero-Section und arbeite dich systematisch vor. Das Ziel ist eine emotionale, rebellische Brand Experience, die Conversions steigert.
