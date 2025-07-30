@@ -4,6 +4,8 @@ import { Link } from "wouter";
 import { cn } from "@/lib/utils";
 import { TypewriterText, AccentText, AnimatedWeight } from "./liquid-text";
 import { useSubtleParticles } from "@/hooks/use-subtle-particles";
+import { ParallaxSection } from "./parallax-section";
+import { FadeInSection } from "./page-transition";
 
 export default function HeroWithStory() {
   const [customerCount, setCustomerCount] = useState(4827);

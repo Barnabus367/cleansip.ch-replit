@@ -11,6 +11,8 @@ import { useQuery } from "@tanstack/react-query";
 import { getProducts } from "@/lib/shopify";
 import { Straw3D } from "./straw-3d";
 import { useSubtleParticles } from "@/hooks/use-subtle-particles";
+import { FadeInSection, ScaleOnHover } from "./page-transition";
+import { ParallaxSection } from "./parallax-section";
 
 export default function FeaturedProduct() {
   const [quantity, setQuantity] = useState(1);
@@ -134,23 +136,30 @@ export default function FeaturedProduct() {
         </div>
 
         {/* 3D Strohhalm Visualisierung */}
-        <div className="mb-16">
-          <div className="text-center mb-8">
-            <h3 className="text-2xl font-bold text-brand-secondary mb-2">Interaktive Produktvorschau</h3>
-            <p className="text-gray-600">Bewege die Maus, um die Qualität zu erleben</p>
+        <FadeInSection delay={0.2}>
+          <div className="mb-16">
+            <div className="text-center mb-8">
+              <h3 className="text-2xl font-bold text-brand-secondary mb-2">Interaktive Produktvorschau</h3>
+              <p className="text-gray-600">Bewege die Maus, um die Qualität zu erleben</p>
+            </div>
+            <ParallaxSection offset={15}>
+              <Straw3D />
+            </ParallaxSection>
           </div>
-          <Straw3D />
-        </div>
+        </FadeInSection>
 
         <div className="bg-brand-neutral rounded-2xl p-8 lg:p-12">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             {/* Product Image */}
             <div className="relative">
-              <img 
-                src={product.images?.[0]?.url || "https://images.unsplash.com/photo-1629198688000-71f23e745b6e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600"} 
-                alt={product.images?.[0]?.altText || `${product.title} - CleanSip Premium Strohhalme`}
-                className="rounded-xl shadow-lg w-full h-auto scale-hover"
-              />
+              <ScaleOnHover>
+                <img 
+                  src={product.images?.[0]?.url || "https://images.unsplash.com/photo-1629198688000-71f23e745b6e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600"} 
+                  alt={product.images?.[0]?.altText || `${product.title} - CleanSip Premium Strohhalme`}
+                  className="rounded-xl shadow-lg w-full h-auto"
+                  loading="lazy"
+                />
+              </ScaleOnHover>
               {product.rebelliousScore && (
                 <Badge className="absolute top-4 right-4 bg-red-600 text-white px-3 py-1">
                   {product.rebelliousScore}% Rebellisch

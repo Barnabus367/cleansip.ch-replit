@@ -5,6 +5,10 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { SubtleBackground, ParticleOverlay } from "@/components/subtle-background";
 import { useSubtleParticles } from "@/hooks/use-subtle-particles";
+import { SmoothScrollContainer } from "@/components/parallax-section";
+import { PageTransition } from "@/components/page-transition";
+import { reportWebVitals, preloadCriticalResources } from "@/utils/performance";
+import { useEffect } from "react";
 import Home from "@/pages/home";
 import Product from "@/pages/product";
 import ComingSoon from "@/pages/coming-soon";
@@ -14,12 +18,48 @@ import NotFound from "@/pages/not-found";
 function Router() {
   return (
     <Switch>
-      <Route path="/" component={Home} />
-      <Route path="/product/:handle" component={Product} />
-      <Route path="/category/strohhalme" component={Product} />
-      <Route path="/coming-soon" component={ComingSoon} />
-      <Route path="/manifest" component={ManifestPage} />
-      <Route component={NotFound} />
+      <Route path="/">
+        {() => (
+          <PageTransition>
+            <Home />
+          </PageTransition>
+        )}
+      </Route>
+      <Route path="/product/:handle">
+        {() => (
+          <PageTransition>
+            <Product />
+          </PageTransition>
+        )}
+      </Route>
+      <Route path="/category/strohhalme">
+        {() => (
+          <PageTransition>
+            <Product />
+          </PageTransition>
+        )}
+      </Route>
+      <Route path="/coming-soon">
+        {() => (
+          <PageTransition>
+            <ComingSoon />
+          </PageTransition>
+        )}
+      </Route>
+      <Route path="/manifest">
+        {() => (
+          <PageTransition>
+            <ManifestPage />
+          </PageTransition>
+        )}
+      </Route>
+      <Route>
+        {() => (
+          <PageTransition>
+            <NotFound />
+          </PageTransition>
+        )}
+      </Route>
     </Switch>
   );
 }
@@ -27,13 +67,21 @@ function Router() {
 function App() {
   const { particles } = useSubtleParticles();
 
+  useEffect(() => {
+    // Initialize performance monitoring
+    reportWebVitals();
+    preloadCriticalResources();
+  }, []);
+
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
-        <SubtleBackground />
-        <Toaster />
-        <Router />
-        <ParticleOverlay particles={particles} />
+        <SmoothScrollContainer>
+          <SubtleBackground />
+          <Toaster />
+          <Router />
+          <ParticleOverlay particles={particles} />
+        </SmoothScrollContainer>
       </TooltipProvider>
     </QueryClientProvider>
   );
