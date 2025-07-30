@@ -1,0 +1,63 @@
+Projekt‑Kontext
+---------------
+Wir sind im geklonten Fork von github.com/vercel/commerce (Next.js 14 + Tailwind CSS, Shopify‑Provider) und bauen den Headless‑Shop **cleansip.ch**.  
+Aktuell gibt es EIN Live‑Produkt (100er‑Pack Plastikstrohhalme), aber der Code soll ab Tag 1 mehr­produkt‑fähig sein: demnächst folgen *Classic Party Cups* (50er‑PP‑Becher), *Pro Stirrer* (100 Holzfreie Rührstäbchen) und *Flex Fork & Knife* (Kunststoff‑Besteck‑Kit).
+
+Brand‑DNA
+---------
+• Markenname: **CleanSip**  
+• Claim: «Nie mehr matschige Alternativen.»  
+• Brand‑Voice: sachlich, lösungsorientiert, leichte Provokation gegen „Pappe & Bambus“.  
+• USP‑Bullets (für Hero & PDP):
+  - 100 % Kunststoff‑Qualität – kein Aufweichen  
+  - Schweizer Lager: 48‑h‑Zustellung  
+  - Bewährte Hygiene‑Standards (BPA‑frei, lebensmittelecht)
+
+Design‑System (Tailwind → theme.extend.colors)
+----------------------------------------------
+primary:   #00BFA6   /* Mint‑Türkis */  
+secondary: #003B46   /* Tiefes Petrol */  
+accent:    #FFD54F   /* Warmes Gelb */  
+neutral:   #F9FAFB   /* Hellgrau */  
+font‑base: "Inter", system‑ui
+
+Logo / Assets
+-------------
+• `/public/logo.svg`: Wortmarke «CleanSip» in #00BFA6.  
+• Zusatz‑Icon‑Set für zukünftige Kategorien: `/public/icons/{cups.svg,stirrers.svg,besteck.svg}` (Dummy‐Placeholders, 64 px).  
+
+Shopify‑Setup (Platzhalter‐Secrets in .env.local)
+-------------------------------------------------
+SHOPIFY_STORE_DOMAIN=example.myshopify.com  
+SHOPIFY_STOREFRONT_API_TOKEN=xxxxx  
+SHOPIFY_API_VERSION=2025-07  
+
+Produkte / SKUs (jetzt & später)
+--------------------------------
+1. **CS‑100**  | CleanSip Strohhalme 100er Pack  | 14.90 CHF | 120 g  
+2. **PC‑50**  | Classic Party Cups 50er Pack    | 12.90 CHF | 500 g _(coming soon)_  
+3. **PS‑100** | Pro Stirrer 100er Pack          |  5.90 CHF | 150 g _(coming soon)_  
+4. **FB‑40**  | Flex Fork & Knife 40er Kit      |  9.80 CHF | 300 g _(coming soon)_
+
+Versandoptionen (frontend‑Info / im Shopify‑Backend anlegen)
+-----------------------------------------------------------
+• A‑Post Brief (untracked) – bis 120 g → CHF 2.50  
+• PostPac Economy (tracked) – ≤ 2 kg → CHF 7.00  
+• Gratis Versand – ≥ CHF 50 Warenwert
+
+Aufgabenliste (ergänzt & angepasst)
+-----------------------------------
+1. **Environment & Health‑Check**  
+   - `pnpm install && pnpm dev` → keine Errors.  
+   - `.env.local` mit Secrets anlegen.  
+
+2. **Design‑System**  
+   - Update `tailwind.config.mjs` mit neuen Farben & Fonts.  
+   - Logo‑SVG & Favicon austauschen.  
+
+3. **Mehrprodukt‑Architektur**  
+   - **Behalte** die Kategorie‑ & Collections‑Routen (*nicht löschen*).  
+   - Lege Dummy‑Produkte (PC‑50, PS‑100, FB‑40) im Shopify‑Dashboard als *draft* an.  
+   - Implementiere in `/app/page.tsx` einen **„Coming Soon“‑Section** (Grid mit Blur‑Overlay) für die drei Draft‑Produkte.  
+
+4. **Hero‑Section** (neue Copy)  
