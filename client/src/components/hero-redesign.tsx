@@ -5,6 +5,7 @@ import { Link } from "wouter";
 import { cn } from "@/lib/utils";
 import { useSubtleParticles } from "@/hooks/use-subtle-particles";
 import { FadeInSection } from "./page-transition";
+import heroImagePath from "@assets/pexels-3170155-9462365_1753910576699.jpg";
 
 export default function HeroRedesign() {
   const [customerCount, setCustomerCount] = useState(4827);
@@ -30,7 +31,7 @@ export default function HeroRedesign() {
       {/* Hero Image Background - Large like Simply Chocolate */}
       <div className="absolute inset-0">
         <img 
-          src="/attached_assets/pexels-3170155-9462365_1753910576699.jpg"
+          src={heroImagePath}
           alt="CleanSip Premium Strohhalme - Zuverlässig seit jeher"
           className="w-full h-full object-cover"
         />

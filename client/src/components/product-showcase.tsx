@@ -1,4 +1,7 @@
 import { FadeInSection } from "./page-transition";
+import bubbleStrawPath from "@assets/pexels-pixabay-531634_1753910576700.jpg";
+import productLifestylePath from "@assets/Produktbild-schwarzer-Strohhalm_1753910576700.jpg";
+import cansImagePath from "@assets/pexels-3170155-9462365_1753910576699.jpg";
 
 export default function ProductShowcase() {
   return (
@@ -24,7 +27,7 @@ export default function ProductShowcase() {
           <FadeInSection delay={0.2}>
             <div className="relative group">
               <img 
-                src="/attached_assets/pexels-pixabay-531634_1753910576700.jpg"
+                src={bubbleStrawPath}
                 alt="CleanSip Strohhalm in Aktion - Blasen zeigen Qualität"
                 className="rounded-2xl shadow-lg w-full h-80 object-cover group-hover:shadow-2xl transition-shadow duration-300"
               />
@@ -40,7 +43,7 @@ export default function ProductShowcase() {
           <FadeInSection delay={0.4}>
             <div className="relative group">
               <img 
-                src="/attached_assets/Produktbild-schwarzer-Strohhalm_1753910576700.jpg"
+                src={productLifestylePath}
                 alt="CleanSip Premium Strohhalm im Alltag"
                 className="rounded-2xl shadow-lg w-full h-80 object-cover group-hover:shadow-2xl transition-shadow duration-300"
               />
@@ -56,7 +59,7 @@ export default function ProductShowcase() {
           <FadeInSection delay={0.6}>
             <div className="relative group">
               <img 
-                src="/attached_assets/pexels-3170155-9462365_1753910576699.jpg"
+                src={cansImagePath}
                 alt="CleanSip Strohhalme - Moderne Eleganz"
                 className="rounded-2xl shadow-lg w-full h-80 object-cover group-hover:shadow-2xl transition-shadow duration-300"
               />

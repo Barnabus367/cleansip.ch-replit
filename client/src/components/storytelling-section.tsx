@@ -1,5 +1,6 @@
 import { FadeInSection } from "./page-transition";
 import { Badge } from "@/components/ui/badge";
+import storytellingImagePath from "@assets/pexels-davidmceachan-90911_1753910576699.jpg";
 
 export default function StorytellingSection() {
   return (
@@ -52,7 +53,7 @@ export default function StorytellingSection() {
             <FadeInSection delay={0.6}>
               <div className="relative">
                 <img 
-                  src="/attached_assets/pexels-davidmceachan-90911_1753910576699.jpg"
+                  src={storytellingImagePath}
                   alt="CleanSip Strohhalme - Vielfalt und Qualität"
                   className="rounded-2xl shadow-2xl w-full"
                 />

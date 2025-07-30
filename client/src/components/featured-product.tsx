@@ -13,6 +13,7 @@ import { Straw3D } from "./straw-3d";
 import { useSubtleParticles } from "@/hooks/use-subtle-particles";
 import { FadeInSection, ScaleOnHover } from "./page-transition";
 import { ParallaxSection } from "./parallax-section";
+import productImagePath from "@assets/Produktbild-schwarzer-Strohhalm_1753910576700.jpg";
 
 export default function FeaturedProduct() {
   const [quantity, setQuantity] = useState(1);
@@ -158,7 +159,7 @@ export default function FeaturedProduct() {
             <div className="relative">
               <ScaleOnHover>
                 <img 
-                  src={product.images?.[0]?.url || "/attached_assets/Produktbild-schwarzer-Strohhalm_1753910576700.jpg"} 
+                  src={product.images?.[0]?.url || productImagePath} 
                   alt={product.images?.[0]?.altText || `${product.title} - CleanSip Premium Strohhalme`}
                   className="rounded-xl shadow-lg w-full h-auto"
                   loading="lazy"
