@@ -1,9 +1,9 @@
-/* Import custom animations first */
-@import './styles/animations.css';
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Import custom animations after Tailwind */
+@import './styles/animations.css';
 
 :root {
   --background: hsl(0, 0%, 100%);

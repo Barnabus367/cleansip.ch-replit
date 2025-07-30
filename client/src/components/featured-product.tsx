@@ -9,7 +9,6 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { useToast } from "@/hooks/use-toast";
 import { useQuery } from "@tanstack/react-query";
 import { getProducts } from "@/lib/shopify";
-import { LiquidText, GlitchText, AnimatedWeight } from "./liquid-text";
 
 export default function FeaturedProduct() {
   const [quantity, setQuantity] = useState(1);
@@ -112,18 +111,18 @@ export default function FeaturedProduct() {
     <section className="py-20 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <div className="inline-block px-4 py-2 bg-red-600 text-white text-sm font-bold uppercase tracking-wider rounded-full mb-4">
-            <GlitchText>Die Unbeugsamen</GlitchText>
-          </div>
-          <h2 className="text-4xl font-bold text-brand-secondary mb-4">
-            <AnimatedWeight text={product.title} />
+          <Badge className="bg-brand-primary/10 text-brand-primary border-brand-primary/20 px-4 py-2 text-sm font-bold uppercase tracking-wider mb-4">
+            Die Unbeugsamen
+          </Badge>
+          <h2 className="text-4xl font-bold text-brand-secondary mb-4 text-hover-lift">
+            {product.title}
           </h2>
           {product.subtitle && (
             <p className="text-lg text-brand-primary font-medium mb-3">{product.subtitle}</p>
           )}
           <p className="text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
             <strong className="text-brand-secondary">Die Wahrheit über Strohhalme:</strong><br />
-            Während andere nach <LiquidText className="text-red-600 font-bold">30 Sekunden aufgeben</LiquidText>, bleiben CleanSip Strohhalme <AnimatedWeight text="standhaft" className="text-brand-primary font-bold" />.
+            Während andere nach <strong className="text-red-600">30 Sekunden aufgeben</strong>, bleiben CleanSip Strohhalme <strong className="text-brand-primary">standhaft</strong>.
           </p>
         </div>
 
@@ -152,7 +151,7 @@ export default function FeaturedProduct() {
             {/* Product Details */}
             <div className="space-y-6">
               <div>
-                <h3 className="text-3xl font-bold text-brand-secondary mb-2">{product.title}</h3>
+                <h3 className="text-3xl font-bold text-brand-secondary mb-2 scale-hover">{product.title}</h3>
                 <p className="text-lg text-brand-primary font-medium mb-3">{product.subtitle || "100 Strohhalme, die dich nie im Stich lassen"}</p>
                 <div className="flex items-center space-x-2">
                   <div className="flex">
@@ -278,11 +277,11 @@ export default function FeaturedProduct() {
                 </div>
                 <Button 
                   onClick={handleAddToCart}
-                  className="w-full bg-brand-primary hover:bg-brand-primary/90 text-black font-bold py-3 text-lg pulse-rebellious"
+                  className="w-full bg-brand-primary hover:bg-brand-primary/90 text-black font-bold py-3 text-lg pulse-rebellious shadow-lift"
                   size="lg"
                 >
                   <ShoppingCart className="mr-2 h-5 w-5" />
-                  🔥 <AnimatedWeight text="ZUR REBELLION HINZUFÜGEN" />
+                  🔥 ZUR REBELLION HINZUFÜGEN
                 </Button>
               </div>
 

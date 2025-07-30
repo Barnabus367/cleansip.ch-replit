@@ -1,0 +1,202 @@
+Die aktuellen Schrift-Animationen sind viel zu übertrieben und wirken unprofessionell. Implementiere sofort folgende Änderungen für ein seriöses, awwwards-würdiges Design:
+1. DEAKTIVIERE alle permanenten Animationen
+tsx// client/src/components/liquid-text.tsx - KOMPLETT ERSETZEN
+export function LiquidText({ children, className }: { children: string, className?: string }) {
+  const [isHovered, setIsHovered] = useState(false);
+  
+  return (
+    <span 
+      className={cn(
+        "inline-block transition-all duration-700 ease-out",
+        isHovered && "transform scale-[1.02]",
+        className
+      )}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      {children}
+    </span>
+  );
+}
+2. Variable Font Weight - NUR bei Hover
+tsx// client/src/components/animated-weight.tsx - ERSETZEN
+export function AnimatedWeight({ text, className }: { text: string, className?: string }) {
+  const [isHovered, setIsHovered] = useState(false);
+  
+  return (
+    <span 
+      className={cn(
+        "inline-block transition-all duration-500 ease-out cursor-default",
+        className
+      )}
+      style={{
+        fontWeight: isHovered ? 800 : 600,
+        letterSpacing: isHovered ? '-0.02em' : '-0.01em'
+      }}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      {text}
+    </span>
+  );
+}
+3. Glitch-Effekt - KOMPLETT ENTFERNEN
+tsx// client/src/components/glitch-text.tsx - LÖSCHEN oder ersetzen durch:
+export function AccentText({ children, className }: { children: string, className?: string }) {
+  return (
+    <span className={cn(
+      "relative inline-block",
+      "after:absolute after:bottom-0 after:left-0 after:w-full after:h-[2px]",
+      "after:bg-brand-accent after:transform after:scale-x-0 after:origin-left",
+      "after:transition-transform after:duration-300 after:ease-out",
+      "hover:after:scale-x-100",
+      className
+    )}>
+      {children}
+    </span>
+  );
+}
+4. CSS Animationen - DRASTISCH REDUZIEREN
+css/* client/src/styles/animations.css - KOMPLETT ERSETZEN */
+
+/* Subtile Hover-Effekte statt permanente Animationen */
+.text-hover-lift {
+  transition: transform 0.3s ease-out;
+}
+
+.text-hover-lift:hover {
+  transform: translateY(-2px);
+}
+
+/* Eleganter Gradient-Shift bei Hover */
+.gradient-shift {
+  background: linear-gradient(90deg, #00BFA6 0%, #003B46 100%);
+  background-size: 200% auto;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  transition: background-position 0.5s ease;
+}
+
+.gradient-shift:hover {
+  background-position: 100% center;
+}
+
+/* Subtile Unterstreichung statt Glitch */
+.underline-reveal {
+  position: relative;
+  display: inline-block;
+}
+
+.underline-reveal::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: #FFD54F;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease-out;
+}
+
+.underline-reveal:hover::after {
+  transform: scaleX(1);
+}
+
+/* KEINE permanenten Animationen! */
+5. Hero Section - PROFESSIONELL UMSETZEN
+tsx// client/src/components/hero-with-story.tsx - Headlines ersetzen
+<h1 className="text-4xl lg:text-7xl font-black leading-tight tracking-tight">
+  <span className="block mb-2 text-hover-lift">
+    SCHLUSS MIT
+  </span>
+  <span className="gradient-shift block text-5xl lg:text-8xl">
+    AUFGEWEICHTEN
+  </span>
+  <span className="underline-reveal text-brand-accent">
+    TRÄUMEN
+  </span>
+</h1>
+
+// Untertitel - Keine Animation
+<p className="text-xl lg:text-2xl text-gray-300 leading-relaxed max-w-lg">
+  CleanSip bringt dir Strohhalme zurück,<br />
+  die <span className="text-brand-primary font-bold">durchhalten</span>
+</p>
+
+// Kundenzähler - Nur Zahl animieren, nicht Schriftgewicht
+<div className="text-2xl font-bold text-brand-primary">
+  {customerCount.toLocaleString('de-CH')}
+</div>
+6. Performance & Accessibility
+tsx// Respektiere prefers-reduced-motion
+const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+// In allen Komponenten:
+const shouldAnimate = !prefersReducedMotion;
+
+// Beispiel:
+<span 
+  className={cn(
+    shouldAnimate && "transition-all duration-500",
+    className
+  )}
+>
+7. Featured Product - KEINE spielerischen Effekte
+tsx// client/src/components/featured-product.tsx
+// Entferne ALLE Animationen aus Produkttexten
+<Badge className="bg-brand-primary/10 text-brand-primary">
+  Die Unbeugsamen
+</Badge>
+
+<h3 className="text-2xl font-bold text-brand-secondary">
+  {product.title}
+</h3>
+
+// Beschreibung ohne Effekte
+<p className="text-gray-600">
+  Während andere nach <strong className="text-red-600">30 Sekunden aufgeben</strong>, 
+  bleiben CleanSip Strohhalme <strong className="text-brand-primary">standhaft</strong>.
+</p>
+8. Alternative: Ein EINZIGER dezenter Effekt
+Wenn du einen Signature-Effekt willst, verwende NUR EINEN:
+tsx// Typewriter-Effekt NUR für Hero-Headline beim ersten Load
+export function TypewriterText({ text, delay = 50 }: { text: string, delay?: number }) {
+  const [displayText, setDisplayText] = useState('');
+  const [isComplete, setIsComplete] = useState(false);
+  
+  useEffect(() => {
+    if (isComplete) return;
+    
+    let index = 0;
+    const interval = setInterval(() => {
+      if (index < text.length) {
+        setDisplayText(text.slice(0, index + 1));
+        index++;
+      } else {
+        setIsComplete(true);
+        clearInterval(interval);
+      }
+    }, delay);
+    
+    return () => clearInterval(interval);
+  }, [text, delay, isComplete]);
+  
+  return (
+    <span className="font-black">
+      {displayText}
+      {!isComplete && <span className="animate-pulse">|</span>}
+    </span>
+  );
+}
+WICHTIG:
+
+Wähle maximal 1-2 subtile Hover-Effekte
+KEINE permanenten Animationen
+KEINE Glitch-Effekte
+KEINE ständigen Font-Weight-Änderungen
+Fokus auf Lesbarkeit und Professionalität
+
+Das Ziel ist ein cleanes, modernes Design mit dezenten Interaktionen - nicht eine Animation-Show!

@@ -1,260 +1,118 @@
-/* Liquid Typography Animations */
-@keyframes liquid-wobble {
-  0%, 100% { 
-    transform: translateX(0) translateY(0) scale(1);
-  }
-  25% { 
-    transform: translateX(1px) translateY(-1px) scale(1.002);
-  }
-  50% { 
-    transform: translateX(-1px) translateY(1px) scale(0.998);
-  }
-  75% { 
-    transform: translateX(1px) translateY(1px) scale(1.001);
+/* Professional Animations - Subtle Hover Effects Only */
+
+/* Respektiere prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
 }
 
-@keyframes liquid-drip {
-  0% { 
-    transform: translateY(0) scaleY(1);
-  }
-  50% { 
-    transform: translateY(2px) scaleY(1.05);
-  }
-  100% { 
-    transform: translateY(0) scaleY(1);
-  }
+/* Subtile Hover-Effekte statt permanente Animationen */
+.text-hover-lift {
+  transition: transform 0.3s ease-out;
 }
 
-/* Glitch Effects */
-@keyframes glitch {
-  0%, 100% { 
-    text-shadow: 
-      2px 0 #00BFA6, 
-      -2px 0 #FFD54F, 
-      0 0 10px rgba(0, 191, 166, 0.5);
-    transform: translate(0);
-  }
-  20% { 
-    text-shadow: 
-      -2px 0 #00BFA6, 
-      2px 0 #FFD54F, 
-      0 0 15px rgba(255, 213, 79, 0.5);
-    transform: translate(-2px, 2px);
-  }
-  40% {
-    text-shadow: 
-      2px 0 #FF6B6B, 
-      -2px 0 #4ECDC4, 
-      0 0 20px rgba(255, 107, 107, 0.6);
-    transform: translate(-2px, -2px);
-  }
-  60% {
-    text-shadow: 
-      -2px 0 #FFD54F, 
-      2px 0 #00BFA6, 
-      0 0 25px rgba(0, 191, 166, 0.7);
-    transform: translate(2px, -2px);
-  }
-  80% {
-    text-shadow: 
-      0 0 #FF6B6B, 
-      0 0 #4ECDC4, 
-      0 0 30px rgba(76, 205, 196, 0.8);
-    transform: translate(2px, 2px);
-  }
+.text-hover-lift:hover {
+  transform: translateY(-2px);
 }
 
-@keyframes glitch-1 {
-  0%, 100% { 
-    transform: translateX(0);
-    opacity: 1;
-  }
-  10% { 
-    transform: translateX(-2px);
-    opacity: 0.8;
-  }
-  20% { 
-    transform: translateX(2px);
-    opacity: 0.6;
-  }
-  30% { 
-    transform: translateX(-2px);
-    opacity: 0.8;
-  }
-  40% { 
-    transform: translateX(1px);
-    opacity: 1;
-  }
+/* Eleganter Gradient-Shift bei Hover */
+.gradient-shift {
+  background: linear-gradient(90deg, #00BFA6 0%, #003B46 100%);
+  background-size: 200% auto;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  transition: background-position 0.5s ease;
 }
 
-@keyframes glitch-2 {
-  0%, 100% { 
-    transform: translateX(0);
-    opacity: 1;
-  }
-  15% { 
-    transform: translateX(2px);
-    opacity: 0.7;
-  }
-  25% { 
-    transform: translateX(-2px);
-    opacity: 0.5;
-  }
-  35% { 
-    transform: translateX(1px);
-    opacity: 0.8;
-  }
-  45% { 
-    transform: translateX(-1px);
-    opacity: 1;
-  }
+.gradient-shift:hover {
+  background-position: 100% center;
 }
 
-.text-glitch {
+/* Subtile Unterstreichung */
+.underline-reveal {
   position: relative;
-  animation: glitch 0.3s infinite;
+  display: inline-block;
 }
 
-.text-glitch::before,
-.text-glitch::after {
-  content: attr(data-text);
+.underline-reveal::after {
+  content: '';
   position: absolute;
-  top: 0;
+  bottom: -4px;
   left: 0;
   width: 100%;
-  height: 100%;
-  pointer-events: none;
+  height: 3px;
+  background: #FFD54F;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease-out;
 }
 
-.text-glitch::before {
-  animation: glitch-1 0.2s infinite;
-  color: #00BFA6;
-  z-index: -1;
-  opacity: 0.7;
+.underline-reveal:hover::after {
+  transform: scaleX(1);
 }
 
-.text-glitch::after {
-  animation: glitch-2 0.2s infinite;
-  color: #FFD54F;
-  z-index: -2;
-  opacity: 0.6;
-}
-
-/* Text Shadow Effects */
-.text-shadow-liquid {
-  text-shadow: 
-    0 2px 4px rgba(0, 191, 166, 0.2),
-    0 4px 8px rgba(0, 191, 166, 0.1),
-    0 8px 16px rgba(0, 191, 166, 0.05);
-}
-
-.text-shadow-rebellious {
-  text-shadow: 
-    2px 2px 0px #003B46,
-    4px 4px 0px rgba(255, 213, 79, 0.3),
-    6px 6px 10px rgba(0, 0, 0, 0.2);
-}
-
-/* Hover Effects */
-.text-hover-liquid:hover {
-  animation: liquid-drip 0.6s ease-in-out;
-  text-shadow: 
-    0 4px 8px rgba(0, 191, 166, 0.4),
-    0 8px 16px rgba(0, 191, 166, 0.2),
-    0 16px 32px rgba(0, 191, 166, 0.1);
-}
-
-/* Pulse Animations für Buttons */
-@keyframes pulse-rebellious {
-  0%, 100% {
-    box-shadow: 0 0 0 0 rgba(0, 191, 166, 0.7);
-  }
-  50% {
-    box-shadow: 0 0 0 10px rgba(0, 191, 166, 0);
-  }
-}
-
+/* Dezente Button-Effekte */
 .pulse-rebellious {
-  animation: pulse-rebellious 2s infinite;
+  transition: box-shadow 0.3s ease;
 }
 
-/* Typewriter Effect */
-@keyframes typewriter {
-  from { width: 0; }
-  to { width: 100%; }
+.pulse-rebellious:hover {
+  box-shadow: 0 0 0 4px rgba(0, 191, 166, 0.2);
 }
 
-@keyframes blink-caret {
-  50% { border-color: transparent; }
+/* Minimale Fade-In Animation für Page Load */
+.fade-in {
+  opacity: 0;
+  animation: fadeIn 0.6s ease-out forwards;
 }
 
-.typewriter {
-  overflow: hidden;
-  border-right: 3px solid #00BFA6;
-  white-space: nowrap;
-  margin: 0 auto;
-  animation: 
-    typewriter 3s steps(40, end),
-    blink-caret 0.75s step-end infinite;
-}
-
-/* Floating Animation */
-@keyframes float {
-  0%, 100% {
-    transform: translateY(0px);
-  }
-  50% {
-    transform: translateY(-10px);
+@keyframes fadeIn {
+  to {
+    opacity: 1;
   }
 }
 
-.animate-float {
-  animation: float 3s ease-in-out infinite;
+/* Subtile Skalierung bei Hover */
+.scale-hover {
+  transition: transform 0.2s ease-out;
 }
 
-/* Shake Animation for errors */
-@keyframes shake {
-  0%, 100% { transform: translateX(0); }
-  10%, 30%, 50%, 70%, 90% { transform: translateX(-2px); }
-  20%, 40%, 60%, 80% { transform: translateX(2px); }
+.scale-hover:hover {
+  transform: scale(1.02);
 }
 
-.animate-shake {
-  animation: shake 0.5s ease-in-out;
+/* Dezente Shadow-Lift */
+.shadow-lift {
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
 }
 
-/* Rainbow text for special occasions */
-@keyframes rainbow {
-  0% { color: #FF6B6B; }
-  16.66% { color: #FFD54F; }
-  33.33% { color: #00BFA6; }
-  50% { color: #4ECDC4; }
-  66.66% { color: #45B7D1; }
-  83.33% { color: #96CEB4; }
-  100% { color: #FF6B6B; }
+.shadow-lift:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
 }
 
-.text-rainbow {
-  animation: rainbow 3s linear infinite;
+/* Text Shadow Effects - Sehr subtil */
+.text-shadow-soft {
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
-/* Scalable glowing effect */
-@keyframes glow {
-  0%, 100% {
-    text-shadow: 
-      0 0 5px currentColor,
-      0 0 10px currentColor,
-      0 0 15px currentColor;
-  }
-  50% {
-    text-shadow: 
-      0 0 10px currentColor,
-      0 0 20px currentColor,
-      0 0 30px currentColor;
-  }
+.text-shadow-brand {
+  text-shadow: 0 2px 4px rgba(0, 191, 166, 0.1);
 }
 
-.text-glow {
-  animation: glow 2s ease-in-out infinite;
+/* Typewriter Cursor */
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
 }
+
+.cursor-blink {
+  animation: blink 1s infinite;
+}
+
+/* KEINE permanenten Animationen! */
+/* KEINE Wobble, Glitch oder kontinuierliche Bewegungen! */
