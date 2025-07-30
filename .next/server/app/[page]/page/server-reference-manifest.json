@@ -1,0 +1,126 @@
+{
+  "node": {
+    "8009bcb647710bdd1cdbd83b3814cb701f64deb355": {
+      "workers": {
+        "app/[page]/page": {
+          "moduleId": "[project]/.next-internal/server/app/[page]/page/actions.js { ACTIONS_MODULE0 => \"[project]/lib/shopify/index.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/components/cart/actions.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false
+        }
+      },
+      "layer": {
+        "app/[page]/page": "rsc"
+      }
+    },
+    "c01c0c3cf0649003ceed705902b38d07e070337814": {
+      "workers": {
+        "app/[page]/page": {
+          "moduleId": "[project]/.next-internal/server/app/[page]/page/actions.js { ACTIONS_MODULE0 => \"[project]/lib/shopify/index.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/components/cart/actions.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false
+        }
+      },
+      "layer": {
+        "app/[page]/page": "rsc"
+      }
+    },
+    "c04f63d603823382482a1a54a29f9aa21595895d11": {
+      "workers": {
+        "app/[page]/page": {
+          "moduleId": "[project]/.next-internal/server/app/[page]/page/actions.js { ACTIONS_MODULE0 => \"[project]/lib/shopify/index.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/components/cart/actions.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false
+        }
+      },
+      "layer": {
+        "app/[page]/page": "rsc"
+      }
+    },
+    "c05c029872c1c42f412222d2bfdd256d05d5effaf0": {
+      "workers": {
+        "app/[page]/page": {
+          "moduleId": "[project]/.next-internal/server/app/[page]/page/actions.js { ACTIONS_MODULE0 => \"[project]/lib/shopify/index.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/components/cart/actions.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false
+        }
+      },
+      "layer": {
+        "app/[page]/page": "rsc"
+      }
+    },
+    "c06482d21c99e94488abfea07a1c7729369e43cab6": {
+      "workers": {
+        "app/[page]/page": {
+          "moduleId": "[project]/.next-internal/server/app/[page]/page/actions.js { ACTIONS_MODULE0 => \"[project]/lib/shopify/index.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/components/cart/actions.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false
+        }
+      },
+      "layer": {
+        "app/[page]/page": "rsc"
+      }
+    },
+    "c0c6ffa6c96b820460f75d078e8204894aa2c3abdc": {
+      "workers": {
+        "app/[page]/page": {
+          "moduleId": "[project]/.next-internal/server/app/[page]/page/actions.js { ACTIONS_MODULE0 => \"[project]/lib/shopify/index.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/components/cart/actions.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false
+        }
+      },
+      "layer": {
+        "app/[page]/page": "rsc"
+      }
+    },
+    "c0cafe4d6cf37faa20d8bd02de4006a10194b32b16": {
+      "workers": {
+        "app/[page]/page": {
+          "moduleId": "[project]/.next-internal/server/app/[page]/page/actions.js { ACTIONS_MODULE0 => \"[project]/lib/shopify/index.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/components/cart/actions.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false
+        }
+      },
+      "layer": {
+        "app/[page]/page": "rsc"
+      }
+    },
+    "000881426f88d279a137f6f0b784212e98ae7a4487": {
+      "workers": {
+        "app/[page]/page": {
+          "moduleId": "[project]/.next-internal/server/app/[page]/page/actions.js { ACTIONS_MODULE0 => \"[project]/lib/shopify/index.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/components/cart/actions.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false
+        }
+      },
+      "layer": {
+        "app/[page]/page": "action-browser"
+      }
+    },
+    "00035b18fa2d32f431ebb42fa23bca06186a14c305": {
+      "workers": {
+        "app/[page]/page": {
+          "moduleId": "[project]/.next-internal/server/app/[page]/page/actions.js { ACTIONS_MODULE0 => \"[project]/lib/shopify/index.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/components/cart/actions.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false
+        }
+      },
+      "layer": {
+        "app/[page]/page": "action-browser"
+      }
+    },
+    "60a89dfd135836ae3e213ef9980013312fe43107b6": {
+      "workers": {
+        "app/[page]/page": {
+          "moduleId": "[project]/.next-internal/server/app/[page]/page/actions.js { ACTIONS_MODULE0 => \"[project]/lib/shopify/index.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/components/cart/actions.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false
+        }
+      },
+      "layer": {
+        "app/[page]/page": "action-browser"
+      }
+    },
+    "603218dd6dc341b1e92481850c209fbb2fe43eb959": {
+      "workers": {
+        "app/[page]/page": {
+          "moduleId": "[project]/.next-internal/server/app/[page]/page/actions.js { ACTIONS_MODULE0 => \"[project]/lib/shopify/index.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/components/cart/actions.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false
+        }
+      },
+      "layer": {
+        "app/[page]/page": "action-browser"
+      }
+    }
+  },
+  "edge": {}
+}
