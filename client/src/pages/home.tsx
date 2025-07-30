@@ -1,5 +1,7 @@
 import Header from "@/components/header";
-import HeroWithStory from "@/components/hero-with-story";
+import HeroRedesign from "@/components/hero-redesign";
+import TrustSignals from "@/components/trust-signals";
+import StorytellingSection from "@/components/storytelling-section";
 import FeaturedProduct from "@/components/featured-product";
 import TestimonialsSection from "@/components/testimonials";
 import ComingSoonSection from "@/components/coming-soon-section";
@@ -13,7 +15,9 @@ export default function Home() {
     <>
       <Header />
       <main>
-        <HeroWithStory />
+        <HeroRedesign />
+        <TrustSignals />
+        <StorytellingSection />
         <FeaturedProduct />
         <TestimonialsSection />
         <ComingSoonSection />

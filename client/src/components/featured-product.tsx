@@ -119,21 +119,24 @@ export default function FeaturedProduct() {
   return (
     <section className="py-20 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <Badge className="bg-brand-primary/10 text-brand-primary border-brand-primary/20 px-4 py-2 text-sm font-bold uppercase tracking-wider mb-4">
-            Die Unbeugsamen
-          </Badge>
-          <h2 className="text-4xl font-bold text-brand-secondary mb-4 text-hover-lift">
-            {product.title}
-          </h2>
-          {product.subtitle && (
-            <p className="text-lg text-brand-primary font-medium mb-3">{product.subtitle}</p>
-          )}
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
-            <strong className="text-brand-secondary">Die Wahrheit über Strohhalme:</strong><br />
-            Während andere nach <strong className="text-red-600">30 Sekunden aufgeben</strong>, bleiben CleanSip Strohhalme <strong className="text-brand-primary">standhaft</strong>.
-          </p>
-        </div>
+        <FadeInSection>
+          <div className="text-center mb-20">
+            <Badge className="mb-6 bg-brand-primary text-black px-6 py-3 text-sm font-bold">
+              Das Original
+            </Badge>
+            <h2 className="text-4xl lg:text-6xl font-bold text-brand-secondary mb-6 leading-tight">
+              {product.title}
+              <span className="block text-brand-primary text-3xl lg:text-4xl mt-2">CHF {product.price}</span>
+            </h2>
+            {product.subtitle && (
+              <p className="text-xl text-brand-primary font-medium mb-6">{product.subtitle}</p>
+            )}
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+              Der einzige Strohhalm, der nicht aufgibt, bevor du fertig bist.
+              <strong className="text-brand-secondary"> Garantiert zuverlässig, garantiert stabil.</strong>
+            </p>
+          </div>
+        </FadeInSection>
 
         {/* 3D Strohhalm Visualisierung */}
         <FadeInSection delay={0.2}>
@@ -148,9 +151,10 @@ export default function FeaturedProduct() {
           </div>
         </FadeInSection>
 
-        <div className="bg-brand-neutral rounded-2xl p-8 lg:p-12">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            {/* Product Image */}
+        <FadeInSection delay={0.4}>
+          <div className="bg-gray-50 rounded-3xl p-8 lg:p-16">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+              {/* Product Image */}
             <div className="relative">
               <ScaleOnHover>
                 <img 
@@ -321,6 +325,7 @@ export default function FeaturedProduct() {
             </div>
           </div>
         </div>
+        </FadeInSection>
 
         {/* Additional Product Info */}
         {product.description && (
