@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Link } from "wouter";
 import { cn } from "@/lib/utils";
+import { LiquidText, GlitchText, AnimatedWeight } from "./liquid-text";
 
 export default function HeroWithStory() {
   const [customerCount, setCustomerCount] = useState(4827);
@@ -43,11 +44,13 @@ export default function HeroWithStory() {
               </div>
               
               <h1 className="text-4xl lg:text-7xl font-black leading-tight tracking-tight">
-                SCHLUSS MIT<br />
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-primary to-brand-accent">
+                <AnimatedWeight text="SCHLUSS MIT" className="block mb-2" /><br />
+                <LiquidText className="text-transparent bg-clip-text bg-gradient-to-r from-brand-primary to-brand-accent block">
                   AUFGEWEICHTEN
-                </span><br />
-                TRÄUMEN
+                </LiquidText><br />
+                <GlitchText className="text-brand-accent text-glow">
+                  TRÄUMEN
+                </GlitchText>
               </h1>
             </div>
 
@@ -57,7 +60,7 @@ export default function HeroWithStory() {
             )}>
               <p className="text-xl lg:text-2xl text-gray-300 leading-relaxed max-w-lg">
                 CleanSip bringt dir Strohhalme zurück,<br />
-                die <span className="text-brand-primary font-bold">durchhalten</span>
+                die <AnimatedWeight text="durchhalten" className="text-brand-primary font-bold" />
               </p>
             </div>
 
@@ -75,10 +78,10 @@ export default function HeroWithStory() {
                   </div>
                   <div className="text-left">
                     <div className="text-2xl font-bold text-brand-primary">
-                      {customerCount.toLocaleString('de-CH')}
+                      <AnimatedWeight text={`${customerCount.toLocaleString('de-CH')}+`} /> <span className="text-white">Schweizer</span>
                     </div>
                     <div className="text-sm text-gray-300">
-                      Schweizer trinken wieder mit Stil
+                      trinken wieder mit Stil
                     </div>
                   </div>
                 </div>
@@ -91,8 +94,8 @@ export default function HeroWithStory() {
               inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
             )}>
               <Link href="/product/cleansip-100">
-                <Button className="bg-brand-primary hover:bg-brand-primary/90 text-black font-bold px-8 py-4 h-auto text-lg shadow-2xl shadow-brand-primary/25 hover:shadow-brand-primary/40 transition-all duration-300 transform hover:scale-105">
-                  🔥 REBELLION STARTEN
+                <Button className="bg-brand-primary hover:bg-brand-primary/90 text-black font-bold px-8 py-4 h-auto text-lg shadow-2xl shadow-brand-primary/25 hover:shadow-brand-primary/40 transition-all duration-300 transform hover:scale-105 pulse-rebellious">
+                  🔥 <AnimatedWeight text="REBELLION STARTEN" />
                 </Button>
               </Link>
               <Link href="/manifest">

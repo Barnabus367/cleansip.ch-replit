@@ -9,6 +9,7 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { useToast } from "@/hooks/use-toast";
 import { useQuery } from "@tanstack/react-query";
 import { getProducts } from "@/lib/shopify";
+import { LiquidText, GlitchText, AnimatedWeight } from "./liquid-text";
 
 export default function FeaturedProduct() {
   const [quantity, setQuantity] = useState(1);
@@ -112,15 +113,17 @@ export default function FeaturedProduct() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <div className="inline-block px-4 py-2 bg-red-600 text-white text-sm font-bold uppercase tracking-wider rounded-full mb-4">
-            Die Unbeugsamen
+            <GlitchText>Die Unbeugsamen</GlitchText>
           </div>
-          <h2 className="text-4xl font-bold text-brand-secondary mb-4">{product.title}</h2>
+          <h2 className="text-4xl font-bold text-brand-secondary mb-4">
+            <AnimatedWeight text={product.title} />
+          </h2>
           {product.subtitle && (
             <p className="text-lg text-brand-primary font-medium mb-3">{product.subtitle}</p>
           )}
           <p className="text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
             <strong className="text-brand-secondary">Die Wahrheit über Strohhalme:</strong><br />
-            Während andere nach 30 Sekunden aufgeben, bleiben CleanSip Strohhalme standhaft.
+            Während andere nach <LiquidText className="text-red-600 font-bold">30 Sekunden aufgeben</LiquidText>, bleiben CleanSip Strohhalme <AnimatedWeight text="standhaft" className="text-brand-primary font-bold" />.
           </p>
         </div>
 
@@ -275,11 +278,11 @@ export default function FeaturedProduct() {
                 </div>
                 <Button 
                   onClick={handleAddToCart}
-                  className="w-full bg-brand-primary hover:bg-brand-primary/90 text-black font-bold py-3 text-lg"
+                  className="w-full bg-brand-primary hover:bg-brand-primary/90 text-black font-bold py-3 text-lg pulse-rebellious"
                   size="lg"
                 >
                   <ShoppingCart className="mr-2 h-5 w-5" />
-                  🔥 ZUR REBELLION HINZUFÜGEN
+                  🔥 <AnimatedWeight text="ZUR REBELLION HINZUFÜGEN" />
                 </Button>
               </div>
 

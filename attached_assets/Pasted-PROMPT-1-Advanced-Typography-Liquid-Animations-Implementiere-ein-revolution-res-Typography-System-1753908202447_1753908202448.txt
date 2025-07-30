@@ -1,0 +1,109 @@
+PROMPT 1: Advanced Typography & Liquid Animations
+Implementiere ein revolutionäres Typography-System mit Liquid- und Glitch-Effekten für die Hero-Section. Die Texte sollen lebendig wirken und die Markengeschichte visuell erzählen.
+Technische Anforderungen:
+1. Liquid Typography für "AUFGEWEICHTEN"
+tsx// client/src/components/liquid-text.tsx
+import { useEffect, useRef } from 'react';
+
+export function LiquidText({ children, className }: { children: string, className?: string }) {
+  const textRef = useRef<HTMLSpanElement>(null);
+  
+  // SVG Filter für Liquid-Effekt
+  return (
+    <>
+      <svg className="absolute w-0 h-0">
+        <filter id="liquid-filter">
+          <feTurbulence 
+            type="turbulence" 
+            baseFrequency="0.02" 
+            numOctaves="3" 
+            result="turbulence"
+          />
+          <feDisplacementMap 
+            in2="turbulence" 
+            in="SourceGraphic" 
+            scale="8" 
+            xChannelSelector="R" 
+            yChannelSelector="G"
+          />
+        </filter>
+      </svg>
+      
+      <span 
+        ref={textRef}
+        className={cn(
+          "inline-block relative",
+          "hover:animate-liquid-drip",
+          className
+        )}
+        style={{ filter: 'url(#liquid-filter)' }}
+      >
+        {children}
+      </span>
+    </>
+  );
+}
+2. Glitch-Effekt für "TRÄUMEN"
+css/* client/src/styles/animations.css */
+@keyframes glitch {
+  0%, 100% { 
+    text-shadow: 
+      2px 0 #00BFA6, 
+      -2px 0 #FFD54F, 
+      0 0 10px rgba(0, 191, 166, 0.5);
+  }
+  20% { 
+    text-shadow: 
+      -2px 0 #00BFA6, 
+      2px 0 #FFD54F, 
+      0 0 15px rgba(255, 213, 79, 0.5);
+  }
+}
+
+.text-glitch {
+  position: relative;
+  animation: glitch 2s infinite;
+}
+
+.text-glitch::before,
+.text-glitch::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.text-glitch::before {
+  animation: glitch-1 0.5s infinite;
+  color: #00BFA6;
+  z-index: -1;
+}
+
+.text-glitch::after {
+  animation: glitch-2 0.5s infinite;
+  color: #FFD54F;
+  z-index: -2;
+}
+3. Variable Font Implementation
+tsx// Füge in client/index.html hinzu:
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+
+// Typography-Komponente mit Gewichts-Animation
+export function AnimatedWeight({ text }: { text: string }) {
+  const [weight, setWeight] = useState(100);
+  
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setWeight(prev => prev >= 900 ? 100 : prev + 100);
+    }, 200);
+    return () => clearInterval(interval);
+  }, []);
+  
+  return (
+    <span style={{ fontWeight: weight, transition: 'font-weight 0.2s' }}>
+      {text}
+    </span>
+  );
+}
