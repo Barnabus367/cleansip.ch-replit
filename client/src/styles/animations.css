@@ -163,5 +163,57 @@
   animation: shimmer 2s infinite;
 }
 
-/* KEINE permanenten Animationen! */
-/* KEINE Wobble, Glitch oder kontinuierliche Bewegungen! */
+/* Subtile Background Animations - Sehr dezent */
+@keyframes subtle-blob {
+  0%, 100% {
+    transform: translate(0px, 0px) scale(1);
+  }
+  25% {
+    transform: translate(10px, -15px) scale(1.05);
+  }
+  50% {
+    transform: translate(-8px, 10px) scale(0.95);
+  }
+  75% {
+    transform: translate(12px, 5px) scale(1.02);
+  }
+}
+
+.animate-subtle-blob {
+  animation: subtle-blob 20s ease-in-out infinite;
+}
+
+.animation-delay-3000 {
+  animation-delay: 3s;
+}
+
+/* Micro-interactions für Premium Feel */
+@keyframes micro-bounce {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.02);
+  }
+}
+
+.micro-bounce {
+  animation: micro-bounce 0.3s ease-out;
+}
+
+/* Success particle glow */
+@keyframes success-glow {
+  0% {
+    box-shadow: 0 0 0 0 rgba(0, 191, 166, 0.4);
+  }
+  100% {
+    box-shadow: 0 0 0 10px rgba(0, 191, 166, 0);
+  }
+}
+
+.success-glow {
+  animation: success-glow 0.6s ease-out;
+}
+
+/* KEINE übertriebenen Animationen! */
+/* Alles bleibt professionell und awwwards-würdig */

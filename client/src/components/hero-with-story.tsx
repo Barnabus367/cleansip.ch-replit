@@ -3,10 +3,12 @@ import { Button } from "@/components/ui/button";
 import { Link } from "wouter";
 import { cn } from "@/lib/utils";
 import { TypewriterText, AccentText, AnimatedWeight } from "./liquid-text";
+import { useSubtleParticles } from "@/hooks/use-subtle-particles";
 
 export default function HeroWithStory() {
   const [customerCount, setCustomerCount] = useState(4827);
   const [inView, setInView] = useState(false);
+  const { spawnParticle } = useSubtleParticles();
 
   // Animierte Zählung der Kunden und Scroll-Animation
   useEffect(() => {
@@ -96,7 +98,13 @@ export default function HeroWithStory() {
               inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
             )}>
               <Link href="/product/cleansip-100">
-                <Button className="bg-brand-primary hover:bg-brand-primary/90 text-black font-bold px-8 py-4 h-auto text-lg shadow-2xl shadow-brand-primary/25 hover:shadow-brand-primary/40 transition-all duration-300 pulse-rebellious">
+                <Button 
+                  className="bg-brand-primary hover:bg-brand-primary/90 text-black font-bold px-8 py-4 h-auto text-lg shadow-2xl shadow-brand-primary/25 hover:shadow-brand-primary/40 transition-all duration-300 pulse-rebellious"
+                  onClick={(e) => {
+                    const rect = e.currentTarget.getBoundingClientRect();
+                    spawnParticle(rect.left + rect.width / 2, rect.top + rect.height / 2, 'interaction');
+                  }}
+                >
                   🔥 REBELLION STARTEN
                 </Button>
               </Link>

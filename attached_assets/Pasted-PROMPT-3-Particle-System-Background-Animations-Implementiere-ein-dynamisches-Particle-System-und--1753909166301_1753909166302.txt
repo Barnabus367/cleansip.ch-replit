@@ -1,0 +1,112 @@
+PROMPT 3: Particle System & Background Animations
+Implementiere ein dynamisches Particle-System und animierte Backgrounds für immersive User Experience.
+1. Advanced Particle System
+tsx// client/src/hooks/use-advanced-particles.ts
+interface Particle {
+  id: string;
+  x: number;
+  y: number;
+  vx: number;
+  vy: number;
+  size: number;
+  color: string;
+  lifetime: number;
+  opacity: number;
+  type: 'bubble' | 'straw' | 'confetti';
+}
+
+export function useAdvancedParticles() {
+  const [particles, setParticles] = useState<Particle[]>([]);
+  const animationRef = useRef<number>();
+  
+  const spawnParticle = useCallback((x: number, y: number, type: Particle['type']) => {
+    const colors = ['#00BFA6', '#003B46', '#FFD54F'];
+    const newParticle: Particle = {
+      id: Math.random().toString(36),
+      x,
+      y,
+      vx: (Math.random() - 0.5) * 2,
+      vy: -Math.random() * 3 - 1,
+      size: Math.random() * 20 + 10,
+      color: colors[Math.floor(Math.random() * colors.length)],
+      lifetime: 100,
+      opacity: 1,
+      type
+    };
+    
+    setParticles(prev => [...prev, newParticle]);
+  }, []);
+  
+  // Physik-Engine
+  useEffect(() => {
+    const updateParticles = () => {
+      setParticles(prev => prev
+        .map(p => ({
+          ...p,
+          x: p.x + p.vx,
+          y: p.y + p.vy,
+          vy: p.vy + 0.1, // Gravity
+          lifetime: p.lifetime - 1,
+          opacity: p.lifetime / 100,
+          size: p.type === 'bubble' ? p.size + 0.1 : p.size
+        }))
+        .filter(p => p.lifetime > 0)
+      );
+      
+      animationRef.current = requestAnimationFrame(updateParticles);
+    };
+    
+    animationRef.current = requestAnimationFrame(updateParticles);
+    return () => cancelAnimationFrame(animationRef.current!);
+  }, []);
+  
+  return { particles, spawnParticle };
+}
+2. Morphing Gradient Background
+tsx// client/src/components/morphing-background.tsx
+export function MorphingBackground() {
+  return (
+    <div className="fixed inset-0 -z-10 overflow-hidden">
+      <div className="absolute inset-0 bg-gradient-to-br from-brand-secondary via-black to-brand-secondary">
+        {/* Animierte Blobs */}
+        <div className="absolute top-0 -left-4 w-72 h-72 bg-brand-primary rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob"></div>
+        <div className="absolute top-0 -right-4 w-72 h-72 bg-brand-accent rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-2000"></div>
+        <div className="absolute -bottom-8 left-20 w-72 h-72 bg-brand-primary rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-4000"></div>
+      </div>
+      
+      {/* Noise Texture */}
+      <div className="absolute inset-0 opacity-5">
+        <svg>
+          <filter id="noise">
+            <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" />
+          </filter>
+          <rect width="100%" height="100%" filter="url(#noise)" />
+        </svg>
+      </div>
+    </div>
+  );
+}
+3. CSS Animations
+css@keyframes blob {
+  0%, 100% {
+    transform: translate(0px, 0px) scale(1);
+  }
+  33% {
+    transform: translate(30px, -50px) scale(1.1);
+  }
+  66% {
+    transform: translate(-20px, 20px) scale(0.9);
+  }
+}
+
+.animate-blob {
+  animation: blob 7s infinite;
+}
+
+.animation-delay-2000 {
+  animation-delay: 2s;
+}
+
+.animation-delay-4000 {
+  animation-delay: 4s;
+}

@@ -10,11 +10,13 @@ import { useToast } from "@/hooks/use-toast";
 import { useQuery } from "@tanstack/react-query";
 import { getProducts } from "@/lib/shopify";
 import { Straw3D } from "./straw-3d";
+import { useSubtleParticles } from "@/hooks/use-subtle-particles";
 
 export default function FeaturedProduct() {
   const [quantity, setQuantity] = useState(1);
   const [selectedColor, setSelectedColor] = useState("");
   const { toast } = useToast();
+  const { spawnParticle } = useSubtleParticles();
 
   // Fetch real Shopify products
   const { data: products = [], isLoading, error } = useQuery({
@@ -44,7 +46,11 @@ export default function FeaturedProduct() {
     }
   };
 
-  const handleAddToCart = () => {
+  const handleAddToCart = (event: React.MouseEvent) => {
+    // Spawn success particles at button location
+    const rect = event.currentTarget.getBoundingClientRect();
+    spawnParticle(rect.left + rect.width / 2, rect.top + rect.height / 2, 'success');
+    
     const colorText = selectedColor ? ` in ${selectedColor}` : '';
     toast({
       title: "🔥 In den Warenkorb gepackt!",
