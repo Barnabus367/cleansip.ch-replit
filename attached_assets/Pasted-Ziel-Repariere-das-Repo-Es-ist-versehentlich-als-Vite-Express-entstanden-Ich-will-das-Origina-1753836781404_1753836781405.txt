@@ -1,0 +1,61 @@
+Ziel
+----
+Repariere das Repo: Es ist versehentlich als Vite+Express entstanden. Ich will das Original-Template
+github.com/vercel/commerce (Next.js 14, App Router, Shopify-Provider).
+Kläre zuerst die Struktur, dann Branding & Funktionen für CleanSip (cleansip.ch).
+
+HARTE AKZEPTANZKRITERIEN (bitte strikt befolgen)
+------------------------------------------------
+1) Root enthält: next.config.ts, tailwind.config.mjs, app/, components/, lib/shopify/, public/, package.json.
+2) package.json enthält "next" und Scripts "dev","build","start" von Next.js.
+3) Startkommando in Replit: pnpm dev -p $PORT (Port aus REPLIT verwenden).
+4) pnpm install abgeschlossen ohne Fehler.
+
+Schritte (in genau dieser Reihenfolge)
+--------------------------------------
+1) Projekt säubern:
+   - Lege Ordner _backup/ an und verschiebe alle bisherigen Dateien dorthin (inkl. client/, server/ etc.).
+2) Repo klonen:
+   - git clone --depth=1 https://github.com/vercel/commerce.git .  (Punkt wichtig)
+   - corepack enable; pnpm -v || npm i -g pnpm@9; pnpm install
+3) Replit Run:
+   - .replit auf "run = \"pnpm dev -p $PORT\"" setzen/ändern.
+4) Sanity-Check:
+   - Liste die Struktur und bestätige, dass lib/shopify existiert und app/layout.tsx vorhanden ist.
+5) ENV vorbereiten:
+   - .env.local aus .env.example ableiten.
+   - Setze Platzhalter:
+     SHOPIFY_STORE_DOMAIN=example.myshopify.com
+     SHOPIFY_STOREFRONT_ACCESS_TOKEN=xxxxx
+     NEXT_PUBLIC_SITE_NAME=CleanSip
+     NEXT_PUBLIC_SITE_URL=https://cleansip.ch
+6) Branding einspielen (Design-System):
+   - In tailwind.config.mjs theme.extend.colors ergänzen:
+       primary:  #00BFA6
+       secondary:#003B46
+       accent:   #FFD54F
+       neutral:  #F9FAFB
+   - /public/logo.svg: einfache Wortmarke "CleanSip" in primary.
+   - Favicon auf Mint (#00BFA6) mit weißem "S".
+7) Mehrprodukt-Skeleton (nicht nur 1 SKU):
+   - Kategorien in der Main-Navigation: Strohhalme, Party Cups, Rührstäbchen, Besteck.
+   - In Shopify (nur Platzhalterintegration im Code): Lege Draft-Handles für "pc-50", "ps-100", "fb-40" an (nur als Coming-Soon visuell).
+   - Auf Startseite (app/page.tsx): Hero + Coming-Soon-Grid für diese drei Draft-Produkte mit Blur und „Benachrichtige mich“-Form (Customer Create).
+8) Hero & Copy auf Zielgruppe abstimmen:
+   - Headline: "CleanSip – Nie mehr matschige Alternativen."
+   - Subline : "Plastikstrohhalme & klassische Party-Basics. In 48 h bei dir."
+   - CTA1: "100er-Pack Strohhalme jetzt kaufen" → /product/cleansip-100
+   - CTA2: "Mehr Produkte demnächst" → #coming-soon
+   - PDP-Box: Hinweis „A‑Post ab CHF 2.50 | Gratis ab CHF 50“ (nur Info, Tarife kommen aus Shopify).
+9) i18n & SEO:
+   - next.config.ts: i18n.locales ['de-CH'] aktivieren.
+   - Basis-SEO (Title/Description) für CleanSip setzen; OG-Image unter /public/og-cleansip.png anlegen.
+10) Abschluss:
+   - "pnpm dev -p $PORT" starten.
+   - Datei-/Änderungsliste posten und kurz bestätigen, dass alle 4 Akzeptanzkriterien erfüllt sind.
+
+WICHTIG
+-------
+- Keine Express- oder Vite-Struktur erzeugen.
+- Kein extra Backend anlegen. API-Routen laufen über Next.js.
+- TypeScript strict einschalten und Linting sauber halten.
