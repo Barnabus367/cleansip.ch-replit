@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useParams } from "wouter";
-import { ShoppingCart, ArrowLeft, Package, Palette, Ruler, Recycle, Info } from "lucide-react";
+import { ShoppingCart, ArrowLeft, Package, Palette, Ruler, Recycle, Info, ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -23,6 +23,8 @@ export default function Product() {
   const [selectedVariant, setSelectedVariant] = useState<any>(null);
   const [currentImage, setCurrentImage] = useState("");
   const [imageTransition, setImageTransition] = useState(false);
+  const [currentThumbnailIndex, setCurrentThumbnailIndex] = useState(0);
+  const thumbnailScrollRef = useRef<HTMLDivElement>(null);
 
   // Determine product handle from URL
   const productHandle = params?.handle || (location === '/category/strohhalme' ? 'plastik-strohhalm' : null);
@@ -60,6 +62,13 @@ export default function Product() {
       const variant = colorVariants[0];
       setSelectedVariant(variant);
       
+      // Find the corresponding thumbnail index
+      const thumbnails = getThumbnailGallery();
+      const thumbnailIndex = thumbnails.findIndex(t => t.color === selectedColor);
+      if (thumbnailIndex !== -1) {
+        setCurrentThumbnailIndex(thumbnailIndex);
+      }
+      
       // Smooth image transition
       setImageTransition(true);
       setTimeout(() => {
@@ -90,6 +99,98 @@ export default function Product() {
   };
 
   const currentPrice = selectedVariant?.price || product?.price || 0;
+
+  // Thumbnail type definition
+  type ThumbnailType = {
+    id: string;
+    url: string;
+    alt: string;
+    type: 'variant' | 'product';
+    color: string | null;
+    variant: any;
+  };
+
+  // Create thumbnail gallery data from variants and product images
+  const getThumbnailGallery = (): ThumbnailType[] => {
+    if (!product) return [];
+    
+    const thumbnails: ThumbnailType[] = [];
+    
+    // Add variant images first (each color variant)
+    if (product.availableColors && product.colorVariants) {
+      product.availableColors.forEach((color: string) => {
+        const colorVariants = product.colorVariants[color];
+        if (colorVariants && colorVariants.length > 0) {
+          const variant = colorVariants[0];
+          if (variant.image?.url) {
+            thumbnails.push({
+              id: `variant-${color}`,
+              url: variant.image.url,
+              alt: `${product.title} - ${color}`,
+              type: 'variant',
+              color: color,
+              variant: variant
+            });
+          }
+        }
+      });
+    }
+    
+    // Add additional product images
+    if (product.images) {
+      product.images.forEach((image: any, index: number) => {
+        // Skip if this image is already included as a variant image
+        const isVariantImage = thumbnails.some(thumb => thumb.url === image.url);
+        if (!isVariantImage) {
+          thumbnails.push({
+            id: `product-${image.id}`,
+            url: image.url,
+            alt: image.altText || `${product.title} - Bild ${index + 1}`,
+            type: 'product',
+            color: null,
+            variant: null
+          });
+        }
+      });
+    }
+    
+    return thumbnails;
+  };
+
+  const thumbnailGallery = getThumbnailGallery();
+
+  // Scroll thumbnail gallery
+  const scrollThumbnails = (direction: 'left' | 'right') => {
+    if (!thumbnailScrollRef.current) return;
+    
+    const container = thumbnailScrollRef.current;
+    const scrollAmount = 200; // Adjust based on thumbnail width
+    
+    if (direction === 'left') {
+      container.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+    } else {
+      container.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+    }
+  };
+
+  // Handle thumbnail click
+  const handleThumbnailClick = (thumbnail: any, index: number) => {
+    setCurrentThumbnailIndex(index);
+    
+    // Smooth image transition
+    setImageTransition(true);
+    setTimeout(() => {
+      setCurrentImage(thumbnail.url);
+      
+      // If it's a variant thumbnail, also update the selected color
+      if (thumbnail.type === 'variant' && thumbnail.color) {
+        setSelectedColor(thumbnail.color);
+        setSelectedVariant(thumbnail.variant);
+      }
+      
+      setImageTransition(false);
+    }, 150);
+  };
 
   // Key product facts for icon row
   const keyFacts = [
@@ -206,28 +307,85 @@ export default function Product() {
                   </CardContent>
                 </Card>
 
-                {/* Thumbnail Gallery - Like Apple */}
-                {product.images && product.images.length > 1 && (
-                  <div className="grid grid-cols-4 gap-3">
-                    {product.images.slice(0, 4).map((image: any, index: number) => (
-                      <button
-                        key={image.id}
-                        onClick={() => setCurrentImage(image.url)}
-                        className={cn(
-                          "aspect-square rounded-xl overflow-hidden border-2 transition-all duration-300 shadow-md hover:shadow-lg",
-                          currentImage === image.url 
-                            ? 'border-brand-primary shadow-brand-primary/25' 
-                            : 'border-gray-200 hover:border-brand-primary/50'
-                        )}
-                      >
-                        {/* TODO: Replace with your authentic product thumbnails */}
-                        <img 
-                          src={image.url}
-                          alt={image.altText}
-                          className="w-full h-full object-cover hover:scale-110 transition-transform duration-300"
-                        />
-                      </button>
-                    ))}
+                {/* Enhanced Thumbnail Gallery - Horizontally Scrollable */}
+                {thumbnailGallery.length > 1 && (
+                  <div className="relative">
+                    {/* Navigation Arrows */}
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white/80 hover:bg-white shadow-md backdrop-blur-sm w-8 h-8"
+                      onClick={() => scrollThumbnails('left')}
+                    >
+                      <ChevronLeft className="w-4 h-4 text-gray-600" />
+                    </Button>
+                    
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white/80 hover:bg-white shadow-md backdrop-blur-sm w-8 h-8"
+                      onClick={() => scrollThumbnails('right')}
+                    >
+                      <ChevronRight className="w-4 h-4 text-gray-600" />
+                    </Button>
+
+                    {/* Scrollable Thumbnail Container */}
+                    <div 
+                      ref={thumbnailScrollRef}
+                      className="flex gap-3 overflow-x-auto scrollbar-hide pb-2 px-8 scroll-smooth"
+                      style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+                    >
+                      {thumbnailGallery.map((thumbnail, index) => (
+                        <button
+                          key={thumbnail.id}
+                          onClick={() => handleThumbnailClick(thumbnail, index)}
+                          className={cn(
+                            "flex-shrink-0 aspect-square w-20 h-20 rounded-xl overflow-hidden border-2 transition-all duration-300 shadow-md hover:shadow-lg relative group",
+                            currentImage === thumbnail.url || currentThumbnailIndex === index
+                              ? 'border-brand-primary shadow-brand-primary/30 shadow-lg' 
+                              : 'border-gray-200 hover:border-brand-primary/50'
+                          )}
+                        >
+                          {/* TODO: Replace with your authentic variant/product thumbnails */}
+                          <img 
+                            src={thumbnail.url}
+                            alt={thumbnail.alt}
+                            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                          />
+                          
+                          {/* Color indicator for variant thumbnails */}
+                          {thumbnail.type === 'variant' && thumbnail.color && (
+                            <div className="absolute bottom-1 right-1 w-3 h-3 rounded-full border border-white shadow-sm"
+                                 style={{ backgroundColor: colorMapping[thumbnail.color] || '#6B7280' }}
+                            />
+                          )}
+                          
+                          {/* Selection indicator */}
+                          {(currentImage === thumbnail.url || currentThumbnailIndex === index) && (
+                            <div className="absolute inset-0 bg-brand-primary/10 flex items-center justify-center">
+                              <div className="w-2 h-2 bg-brand-primary rounded-full shadow-lg"></div>
+                            </div>
+                          )}
+                        </button>
+                      ))}
+                    </div>
+                    
+                    {/* Scroll indicator dots */}
+                    {thumbnailGallery.length > 4 && (
+                      <div className="flex justify-center mt-3 gap-1">
+                        {Array.from({ length: Math.ceil(thumbnailGallery.length / 4) }).map((_, i) => (
+                          <div
+                            key={i}
+                            className={cn(
+                              "w-1.5 h-1.5 rounded-full transition-colors",
+                              Math.floor(currentThumbnailIndex / 4) === i 
+                                ? 'bg-brand-primary' 
+                                : 'bg-gray-300'
+                            )}
+                          />
+                        ))}
+                      </div>
+                    )}
                   </div>
                 )}
               </div>
