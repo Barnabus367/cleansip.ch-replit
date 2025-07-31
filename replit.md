@@ -124,6 +124,8 @@ The application follows a monorepo structure with clear separation between clien
 - **Enhanced Product Gallery**: Horizontal scrollable thumbnail gallery with variant-specific images and smooth navigation arrows
 - **Interactive Preview Removal**: Removed 3D straw component and interactive product preview for cleaner user experience
 - **UI Polish**: Cleaned up component imports and optimized animation delays for better performance
+- **Featured Product Modernization**: Updated featured-product.tsx with Apple-style product display, matching product.tsx layout
+- **Codebase Cleanup**: Removed 3 unused component files (hero-section.tsx, hero-with-story.tsx, liquid-text.tsx) to streamline project structure
 
 ## Previous Changes (July 30, 2025)
 - **Complete Homepage Redesign**: Inspired by Simply Chocolate design patterns with professional layout structure
