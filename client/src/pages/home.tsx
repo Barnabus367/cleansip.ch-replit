@@ -1,5 +1,5 @@
 import Header from "@/components/header";
-import HeroMinimalist from "@/components/hero-minimalist";
+import HeroEnhanced3D from "@/components/hero-enhanced-3d";
 import TrustSignals from "@/components/trust-signals";
 import StorytellingSection from "@/components/storytelling-section";
 import ProductShowcase from "@/components/product-showcase";
@@ -16,7 +16,7 @@ export default function Home() {
     <>
       <Header />
       <main>
-        <HeroMinimalist />
+        <HeroEnhanced3D />
         <TrustSignals />
         <StorytellingSection />
         <ProductShowcase />
