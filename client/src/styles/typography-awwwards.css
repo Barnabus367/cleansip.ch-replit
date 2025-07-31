@@ -1,0 +1,299 @@
+/* CleanSip Awwwards-Level Typography System */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap');
+
+:root {
+  /* Fluid Typography Scale */
+  --type-scale-min: 1.125;
+  --type-scale-max: 1.333;
+  
+  /* Base Font Sizes */
+  --text-xs: clamp(0.75rem, 0.7rem + 0.25vw, 0.875rem);
+  --text-sm: clamp(0.875rem, 0.8rem + 0.375vw, 1rem);
+  --text-base: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);
+  --text-lg: clamp(1.125rem, 1rem + 0.625vw, 1.5rem);
+  --text-xl: clamp(1.5rem, 1.25rem + 1.25vw, 2rem);
+  --text-2xl: clamp(2rem, 1.5rem + 2.5vw, 3rem);
+  --text-3xl: clamp(2.5rem, 2rem + 2.5vw, 4rem);
+  --text-4xl: clamp(3rem, 2rem + 5vw, 5rem);
+  --text-5xl: clamp(4rem, 2.5rem + 7.5vw, 7rem);
+  --text-display: clamp(5rem, 3rem + 10vw, 10rem);
+  
+  /* Line Heights */
+  --leading-none: 1;
+  --leading-tight: 1.1;
+  --leading-snug: 1.2;
+  --leading-normal: 1.5;
+  --leading-relaxed: 1.7;
+  --leading-loose: 2;
+  
+  /* Letter Spacing */
+  --tracking-tighter: -0.05em;
+  --tracking-tight: -0.04em;
+  --tracking-normal: -0.02em;
+  --tracking-wide: 0.01em;
+  --tracking-wider: 0.02em;
+  --tracking-widest: 0.08em;
+  
+  /* Font Weights */
+  --font-thin: 100;
+  --font-extralight: 200;
+  --font-light: 300;
+  --font-normal: 400;
+  --font-medium: 500;
+  --font-semibold: 600;
+  --font-bold: 700;
+  --font-extrabold: 800;
+  --font-black: 900;
+}
+
+/* Premium Font Stack */
+.font-sans {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-feature-settings: 'cv11', 'ss01', 'ss03', 'zero', 'onum', 'liga', 'kern';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+.font-serif {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-feature-settings: 'liga', 'kern', 'onum';
+}
+
+/* Display Typography - Hero Headlines */
+.type-display-1 {
+  font-size: var(--text-display);
+  font-weight: var(--font-thin);
+  line-height: var(--leading-none);
+  letter-spacing: var(--tracking-tighter);
+  text-transform: none;
+}
+
+.type-display-2 {
+  font-size: var(--text-5xl);
+  font-weight: var(--font-extralight);
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-tight);
+}
+
+.type-display-3 {
+  font-size: var(--text-4xl);
+  font-weight: var(--font-light);
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-normal);
+}
+
+/* Headline Typography */
+.type-h1 {
+  font-size: var(--text-3xl);
+  font-weight: var(--font-bold);
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-normal);
+}
+
+.type-h2 {
+  font-size: var(--text-2xl);
+  font-weight: var(--font-semibold);
+  line-height: var(--leading-snug);
+  letter-spacing: var(--tracking-normal);
+}
+
+.type-h3 {
+  font-size: var(--text-xl);
+  font-weight: var(--font-medium);
+  line-height: var(--leading-snug);
+  letter-spacing: var(--tracking-wide);
+}
+
+/* Body Typography */
+.type-body-lg {
+  font-size: var(--text-lg);
+  font-weight: var(--font-normal);
+  line-height: var(--leading-relaxed);
+  letter-spacing: var(--tracking-wide);
+}
+
+.type-body {
+  font-size: var(--text-base);
+  font-weight: var(--font-normal);
+  line-height: var(--leading-relaxed);
+  letter-spacing: var(--tracking-wide);
+}
+
+.type-body-sm {
+  font-size: var(--text-sm);
+  font-weight: var(--font-normal);
+  line-height: var(--leading-normal);
+  letter-spacing: var(--tracking-wide);
+}
+
+/* Special Typography Styles */
+.type-quote {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: var(--text-2xl);
+  font-weight: var(--font-normal);
+  font-style: italic;
+  line-height: var(--leading-relaxed);
+  letter-spacing: var(--tracking-wide);
+}
+
+.type-label {
+  font-size: var(--text-xs);
+  font-weight: var(--font-semibold);
+  line-height: var(--leading-none);
+  letter-spacing: var(--tracking-widest);
+  text-transform: uppercase;
+}
+
+.type-caption {
+  font-size: var(--text-sm);
+  font-weight: var(--font-normal);
+  line-height: var(--leading-normal);
+  letter-spacing: var(--tracking-wide);
+  color: rgb(107 114 128);
+}
+
+/* Typography Utilities */
+.text-balance {
+  text-wrap: balance;
+}
+
+.text-pretty {
+  text-wrap: pretty;
+}
+
+/* Kerning Pairs */
+.kern-tight {
+  font-kerning: normal;
+  font-feature-settings: 'kern' 1;
+}
+
+/* Optical Sizing for Large Text */
+.optical-size-auto {
+  font-optical-sizing: auto;
+}
+
+/* Drop Caps */
+.drop-cap::first-letter {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 4.5em;
+  font-weight: 700;
+  line-height: 0.8;
+  float: left;
+  margin: 0.1em 0.1em 0 0;
+}
+
+/* Smart Quotes */
+.smart-quotes {
+  quotes: """ """ "'" "'";
+}
+
+.smart-quotes q::before {
+  content: open-quote;
+}
+
+.smart-quotes q::after {
+  content: close-quote;
+}
+
+/* Text Animations - Subtle */
+.text-appear {
+  animation: textAppear 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes textAppear {
+  from {
+    opacity: 0;
+    transform: translateY(1rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Hover Effects - Refined */
+.text-hover-accent {
+  transition: color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.text-hover-accent:hover {
+  color: var(--brand-primary);
+}
+
+/* Split Text Animation Prep */
+.split-text {
+  overflow: hidden;
+}
+
+.split-text > span {
+  display: inline-block;
+}
+
+/* Link Underline - Premium */
+.link-underline {
+  position: relative;
+  text-decoration: none;
+}
+
+.link-underline::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background-color: currentColor;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.link-underline:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+/* Text Gradient - Subtle */
+.text-gradient-subtle {
+  background: linear-gradient(135deg, var(--brand-secondary) 0%, var(--brand-primary) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Responsive Typography Adjustments */
+@media (max-width: 640px) {
+  :root {
+    --type-scale-min: 1.067;
+    --type-scale-max: 1.2;
+  }
+  
+  .type-display-1 {
+    font-weight: var(--font-extralight);
+  }
+}
+
+/* Dark Mode Typography */
+@media (prefers-color-scheme: dark) {
+  .type-caption {
+    color: rgb(156 163 175);
+  }
+}
+
+/* Print Typography */
+@media print {
+  body {
+    font-size: 12pt;
+    line-height: 1.5;
+  }
+  
+  .type-display-1,
+  .type-display-2,
+  .type-display-3 {
+    font-size: 24pt;
+    line-height: 1.2;
+  }
+}

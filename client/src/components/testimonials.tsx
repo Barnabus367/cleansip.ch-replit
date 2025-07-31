@@ -1,198 +1,211 @@
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { Star, Quote } from "lucide-react";
-import { motion, useScroll, useTransform, useInView } from "framer-motion";
-import { useRef } from "react";
+import { cn } from "@/lib/utils";
+import { useInView } from "react-intersection-observer";
 
-const testimonials = [
-    {
-        name: "Marco S.",
-        location: "Zürich",
-        role: "Gastronom",
-        text: "Endlich Strohhalme, die den ganzen Abend halten. Meine Gäste sind zufrieden und ich spare mir peinliche Situationen.",
-        rating: 5,
-        avatar: "MS",
-        verified: true
-    },
-    {
-        name: "Sandra M.",
-        location: "Basel",
-        role: "Event-Managerin",
-        text: "Bei unseren Firmenfeiern setzen wir auf CleanSip. Funktioniert einfach - keine Reklamationen mehr.",
-        rating: 5,
-        avatar: "SM",
-        verified: true
-    },
-    {
-        name: "Thomas K.",
-        location: "Bern",
-        role: "Familienvater",
-        text: "Qualität, die hält was sie verspricht. Unsere Kinder können endlich wieder entspannt trinken.",
-        rating: 5,
-        avatar: "TK",
-        verified: true
-    }
+interface Testimonial {
+  id: string;
+  name: string;
+  role: string;
+  content: string;
+  rating: number;
+  image?: string;
+  highlight?: string;
+}
+
+const testimonials: Testimonial[] = [
+  {
+    id: "1",
+    name: "Michael R.",
+    role: "Barbesitzer, Zürich",
+    content: "Endlich Strohhalme, die nicht nach 2 Minuten aufweichen! Meine Gäste lieben sie.",
+    rating: 5,
+    highlight: "nicht aufweichen",
+  },
+  {
+    id: "2",
+    name: "Sarah L.",
+    role: "Event-Managerin",
+    content: "Für unsere Premium-Events sind diese Strohhalme perfekt. Stil trifft auf Funktion.",
+    rating: 5,
+    highlight: "Premium-Events",
+  },
+  {
+    id: "3",
+    name: "Thomas K.",
+    role: "Privatperson",
+    content: "Ich will einfach meinen Drink geniessen, ohne dass der Strohhalm zerfällt. Mission erfüllt!",
+    rating: 5,
+    highlight: "Mission erfüllt",
+  },
 ];
 
-// Staggered animation variants for cards
-const cardVariants = {
-    hidden: {
-        opacity: 0,
-        y: 60,
-        scale: 0.9
-    },
-    visible: (index: number) => ({
-        opacity: 1,
-        y: 0,
-        scale: 1,
-        transition: {
-            delay: index * 0.2,
-            duration: 0.6,
-            ease: [0.25, 0.46, 0.45, 0.94]
-        }
-    })
-};
+export default function Testimonials() {
+  const [activeIndex, setActiveIndex] = useState(0);
+  const { ref, inView } = useInView({
+    threshold: 0.3,
+    triggerOnce: true,
+  });
 
-export default function TestimonialsSection() {
-    const ref = useRef(null);
-    const isInView = useInView(ref, { once: true, margin: "-100px" });
+  return (
+    <section ref={ref} className="relative overflow-hidden">
+      {/* Background Pattern */}
+      <div className="absolute inset-0 opacity-5">
+        <div className="absolute inset-0" style={{
+          backgroundImage: `repeating-linear-gradient(45deg, #0A0A0A 25%, transparent 25%, transparent 75%, #0A0A0A 75%, #0A0A0A), 
+                           repeating-linear-gradient(45deg, #0A0A0A 25%, transparent 25%, transparent 75%, #0A0A0A 75%, #0A0A0A)`,
+          backgroundPosition: '0 0, 40px 40px',
+          backgroundSize: '80px 80px',
+        }} />
+      </div>
 
-    // Parallax scroll effects for testimonials
-    const { scrollY } = useScroll();
+      <div className="relative z-10">
+        {/* Desktop Layout - Cards Grid */}
+        <div className="hidden lg:grid grid-cols-3 gap-8">
+          {testimonials.map((testimonial, index) => (
+            <motion.div
+              key={testimonial.id}
+              initial={{ opacity: 0, y: 50 }}
+              animate={inView ? { opacity: 1, y: 0 } : {}}
+              transition={{ 
+                duration: 0.8, 
+                delay: index * 0.2,
+                ease: [0.22, 1, 0.36, 1] 
+              }}
+            >
+              <TestimonialCard testimonial={testimonial} />
+            </motion.div>
+          ))}
+        </div>
 
-    return (
-        <section ref={ref} className="py-24 bg-gradient-to-br from-brand-neutral via-white to-gray-50 overflow-hidden">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Mobile Layout - Carousel */}
+        <div className="lg:hidden">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={activeIndex}
+              initial={{ opacity: 0, x: 50 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -50 }}
+              transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+            >
+              <TestimonialCard testimonial={testimonials[activeIndex]} />
+            </motion.div>
+          </AnimatePresence>
 
-                {/* Enhanced Header */}
-                <motion.div
-                    className="text-center mb-20"
-                    initial={{ opacity: 0, y: 40 }}
-                    animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
-                    transition={{ duration: 0.8, ease: "easeOut" }}
-                >
-                    <div className="inline-flex items-center gap-2 px-6 py-3 bg-green-600 text-white text-sm font-bold uppercase tracking-wider rounded-full mb-6 shadow-lg">
-                        <Star className="w-4 h-4 fill-white" />
-                        Echte Erfolgsgeschichten
-                    </div>
-                    <h2 className="text-4xl lg:text-6xl font-black text-brand-secondary mb-6 tracking-[-0.02em] leading-tight">
-                        Das sagen unsere
-                        <span className="text-brand-primary"> Rebellen</span>
-                    </h2>
-                    <p className="text-xl lg:text-2xl text-gray-600 max-w-4xl mx-auto leading-relaxed font-medium">
-                        Über <strong className="text-brand-primary">500 Schweizer</strong> haben bereits gewechselt und nie zurückgeblickt.
-                    </p>
-                </motion.div>
+          {/* Mobile Navigation Dots */}
+          <div className="flex justify-center gap-2 mt-8">
+            {testimonials.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => setActiveIndex(index)}
+                className={cn(
+                  "w-2 h-2 rounded-full transition-all duration-300",
+                  activeIndex === index 
+                    ? "w-8 bg-[#00BFA6]" 
+                    : "bg-[#0A0A0A]/20 hover:bg-[#0A0A0A]/40"
+                )}
+              />
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
 
-                {/* Premium Testimonials Grid */}
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12">
-                    {testimonials.map((testimonial, index) => {
-                        // Create sophisticated parallax effect for each card
-                        const cardY = useTransform(
-                            scrollY,
-                            [1200, 2400],
-                            [30 * (index + 1), -30 * (index + 1)]
-                        );
+// Individual Testimonial Card
+function TestimonialCard({ testimonial }: { testimonial: Testimonial }) {
+  const [isHovered, setIsHovered] = useState(false);
 
-                        return (
-                            <motion.div
-                                key={index}
-                                custom={index}
-                                variants={cardVariants}
-                                initial="hidden"
-                                animate={isInView ? "visible" : "hidden"}
-                                style={{ y: cardY }}
-                                whileHover={{
-                                    scale: 1.03,
-                                    y: cardY.get() - 15,
-                                    boxShadow: "0 25px 50px rgba(0, 0, 0, 0.15)"
-                                }}
-                                className="relative bg-white rounded-3xl p-8 lg:p-10 shadow-xl border border-gray-100 hover:shadow-2xl transition-all duration-500 group"
-                            >
-                                {/* Elegant Quote Icon */}
-                                <div className="absolute -top-4 -left-4 w-12 h-12 bg-brand-primary rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
-                                    <Quote className="w-6 h-6 text-black" />
-                                </div>
-
-                                {/* Customer Info Header */}
-                                <div className="flex items-center mb-6">
-                                    <div className="w-16 h-16 bg-gradient-to-br from-brand-primary/20 to-brand-secondary/20 rounded-2xl flex items-center justify-center text-sm font-bold text-brand-secondary mr-4 shadow-inner border-2 border-gray-100">
-                                        {testimonial.avatar}
-                                    </div>
-                                    <div className="flex-1">
-                                        <div className="flex items-center gap-2 mb-1">
-                                            <div className="font-bold text-lg text-brand-secondary">{testimonial.name}</div>
-                                            {testimonial.verified && (
-                                                <div className="w-5 h-5 bg-green-500 rounded-full flex items-center justify-center">
-                                                    <span className="text-white text-xs">✓</span>
-                                                </div>
-                                            )}
-                                        </div>
-                                        <div className="text-sm text-gray-600 font-medium">{testimonial.location}</div>
-                                        <div className="text-xs text-gray-500">{testimonial.role}</div>
-                                    </div>
-                                </div>
-
-                                {/* Premium Star Rating */}
-                                <div className="flex items-center gap-1 mb-6">
-                                    {[...Array(testimonial.rating)].map((_, i) => (
-                                        <motion.div
-                                            key={i}
-                                            initial={{ scale: 0, rotate: -180 }}
-                                            animate={isInView ? { scale: 1, rotate: 0 } : { scale: 0, rotate: -180 }}
-                                            transition={{ delay: 0.5 + (index * 0.2) + (i * 0.1), duration: 0.4 }}
-                                        >
-                                            <Star className="w-5 h-5 fill-yellow-400 text-yellow-400 drop-shadow-sm" />
-                                        </motion.div>
-                                    ))}
-                                    <span className="ml-2 text-sm font-semibold text-gray-700">5.0</span>
-                                </div>
-
-                                {/* Enhanced Testimonial Text */}
-                                <blockquote className="text-gray-700 text-lg leading-relaxed mb-6 font-medium italic">
-                                    "{testimonial.text}"
-                                </blockquote>
-
-                                {/* Verification Badge */}
-                                <div className="flex items-center justify-between">
-                                    <div className="flex items-center text-xs text-gray-500 font-semibold">
-                                        <div className="w-2 h-2 bg-green-500 rounded-full mr-2 animate-pulse" />
-                                        Verifizierter Kunde
-                                    </div>
-                                    <div className="text-xs text-gray-400 font-medium">
-                                        Januar 2025
-                                    </div>
-                                </div>
-
-                                {/* Hover Effect Gradient */}
-                                <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-brand-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
-                            </motion.div>
-                        );
-                    })}
-                </div>
-
-                {/* Trust Signal Footer */}
-                <motion.div
-                    className="text-center mt-16"
-                    initial={{ opacity: 0, y: 30 }}
-                    animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-                    transition={{ delay: 1.0, duration: 0.6 }}
-                >
-                    <div className="inline-flex items-center gap-4 bg-white/80 backdrop-blur-sm rounded-full px-8 py-4 shadow-lg border border-gray-200">
-                        <div className="flex items-center gap-2">
-                            <Star className="w-5 h-5 fill-yellow-400 text-yellow-400" />
-                            <span className="font-bold text-gray-900">4.9/5</span>
-                        </div>
-                        <div className="w-px h-6 bg-gray-300" />
-                        <div className="text-sm text-gray-600 font-medium">
-                            <strong>500+</strong> zufriedene Schweizer Kunden
-                        </div>
-                        <div className="w-px h-6 bg-gray-300" />
-                        <div className="text-sm text-gray-600 font-medium">
-                            🇨🇭 <strong>Swiss Quality</strong>
-                        </div>
-                    </div>
-                </motion.div>
-
-            </div>
-        </section>
+  // Function to highlight specific words
+  const renderHighlightedContent = (content: string, highlight?: string) => {
+    if (!highlight) return content;
+    
+    const parts = content.split(new RegExp(`(${highlight})`, 'gi'));
+    return parts.map((part, index) => 
+      part.toLowerCase() === highlight.toLowerCase() 
+        ? <span key={index} className="text-[#00BFA6] font-semibold">{part}</span>
+        : part
     );
+  };
+
+  return (
+    <motion.div
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      whileHover={{ y: -8 }}
+      className={cn(
+        "relative bg-white rounded-sm p-8 h-full",
+        "border border-[#E5E7EB] transition-all duration-500",
+        "hover:border-[#00BFA6]/20 hover:shadow-2xl"
+      )}
+    >
+      {/* Quote Icon */}
+      <div className="absolute -top-4 -left-4 w-12 h-12 bg-[#00BFA6] rounded-full flex items-center justify-center">
+        <Quote className="w-6 h-6 text-white" />
+      </div>
+
+      {/* Rating */}
+      <div className="flex gap-1 mb-6">
+        {[...Array(5)].map((_, i) => (
+          <motion.div
+            key={i}
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            transition={{ delay: i * 0.1 }}
+          >
+            <Star
+              className={cn(
+                "w-4 h-4",
+                i < testimonial.rating 
+                  ? "fill-[#FFD54F] text-[#FFD54F]" 
+                  : "fill-gray-200 text-gray-200"
+              )}
+            />
+          </motion.div>
+        ))}
+      </div>
+
+      {/* Content */}
+      <blockquote className="type-quote text-[#0A0A0A] mb-6">
+        "{renderHighlightedContent(testimonial.content, testimonial.highlight)}"
+      </blockquote>
+
+      {/* Author */}
+      <div className="flex items-center gap-4">
+        {testimonial.image ? (
+          <img
+            src={testimonial.image}
+            alt={testimonial.name}
+            className="w-12 h-12 rounded-full object-cover"
+          />
+        ) : (
+          <div className="w-12 h-12 rounded-full bg-[#0A0A0A]/5 flex items-center justify-center">
+            <span className="type-label text-[#0A0A0A]">
+              {testimonial.name.charAt(0)}
+            </span>
+          </div>
+        )}
+        
+        <div>
+          <p className="type-body font-medium text-[#0A0A0A]">
+            {testimonial.name}
+          </p>
+          <p className="type-caption text-[#6B7280]">
+            {testimonial.role}
+          </p>
+        </div>
+      </div>
+
+      {/* Hover Effect - Accent Line */}
+      <motion.div
+        className="absolute bottom-0 left-0 right-0 h-1 bg-[#00BFA6]"
+        initial={{ scaleX: 0 }}
+        animate={{ scaleX: isHovered ? 1 : 0 }}
+        transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+        style={{ transformOrigin: 'left' }}
+      />
+    </motion.div>
+  );
 }

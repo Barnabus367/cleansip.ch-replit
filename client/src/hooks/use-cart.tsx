@@ -83,8 +83,8 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
             setCartItems(items => [...items, cartItem]);
 
             toast({
-                title: "🎉 Zur Rebellion hinzugefügt!",
-                description: `${newItem.title} (${newItem.color}) ist jetzt im Warenkorb.`,
+                title: "✅ Zum Warenkorb hinzugefügt!",
+                description: `${newItem.title} (${newItem.color}) wurde erfolgreich hinzugefügt.`,
             });
         }
 

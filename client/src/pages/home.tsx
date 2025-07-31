@@ -1,32 +1,22 @@
 import Header from "@/components/header";
-import HeroRedesign from "@/components/hero-redesign";
-import TrustSignals from "@/components/trust-signals";
+import Hero from "@/components/hero";
 import StorytellingSection from "@/components/storytelling-section";
-import ProductShowcase from "@/components/product-showcase";
-import FeaturedProductSimple from "@/components/featured-product-simple";
-import TestimonialsSection from "@/components/testimonials";
-import ComingSoonSection from "@/components/coming-soon-section";
+import ProductGrid from "@/components/product-grid";
+import Testimonials from "@/components/testimonials";
 import TrustSection from "@/components/trust-section";
-import SocialProofWidget from "@/components/social-proof";
-import NewsletterPopup from "@/components/newsletter-popup";
 import Footer from "@/components/footer";
 
 export default function Home() {
   return (
     <>
       <Header />
-      <main>
-        <HeroRedesign />
-        <TrustSignals />
+      <main className="bg-[#FAFAF9]">
+        <Hero />
         <StorytellingSection />
-        <ProductShowcase />
-        <FeaturedProductSimple />
-        <TestimonialsSection />
-        <ComingSoonSection />
+        <ProductGrid />
+        <Testimonials />
         <TrustSection />
       </main>
-      <SocialProofWidget />
-      {/* <NewsletterPopup /> */}
       <Footer />
     </>
   );

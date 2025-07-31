@@ -4,6 +4,12 @@
 /* Import CleanSip Brand Consistency System */
 @import './styles/cleansip-brand.css';
 
+/* Import Awwwards-Level Typography System */
+@import './styles/typography-awwwards.css';
+
+/* Import Awwwards-Level Effects */
+@import './styles/awwwards-effects.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

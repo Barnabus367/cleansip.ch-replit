@@ -12,6 +12,9 @@ import { reportWebVitals, preloadCriticalResources } from "@/utils/performance";
 import { useEffect } from "react";
 import Home from "@/pages/home";
 import Product from "@/pages/product";
+import Contact from "@/pages/contact";
+import FAQ from "@/pages/faq";
+import About from "@/pages/about";
 import ComingSoon from "@/pages/coming-soon";
 import ManifestPage from "@/pages/manifest";
 import NotFound from "@/pages/not-found";
@@ -29,14 +32,35 @@ function Router() {
       <Route path="/product/:handle">
         {() => (
           <PageTransition>
-            <Product />
+            <ProductAwwwards />
           </PageTransition>
         )}
       </Route>
       <Route path="/category/strohhalme">
         {() => (
           <PageTransition>
-            <Product />
+            <ProductAwwwards />
+          </PageTransition>
+        )}
+      </Route>
+      <Route path="/contact">
+        {() => (
+          <PageTransition>
+            <Contact />
+          </PageTransition>
+        )}
+      </Route>
+      <Route path="/faq">
+        {() => (
+          <PageTransition>
+            <FAQ />
+          </PageTransition>
+        )}
+      </Route>
+      <Route path="/about">
+        {() => (
+          <PageTransition>
+            <About />
           </PageTransition>
         )}
       </Route>
