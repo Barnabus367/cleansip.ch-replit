@@ -1,5 +1,5 @@
 import Header from "@/components/header";
-import HeroEnhanced3D from "@/components/hero-enhanced-3d";
+import HeroRedesign from "@/components/hero-redesign";
 import TrustSignals from "@/components/trust-signals";
 import StorytellingSection from "@/components/storytelling-section";
 import ProductShowcase from "@/components/product-showcase";
@@ -16,7 +16,7 @@ export default function Home() {
     <>
       <Header />
       <main>
-        <HeroEnhanced3D />
+        <HeroRedesign />
         <TrustSignals />
         <StorytellingSection />
         <ProductShowcase />
