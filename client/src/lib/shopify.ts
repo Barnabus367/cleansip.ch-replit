@@ -1,32 +1,8 @@
 // CleanSip Shopify Integration - Server-side proxy approach for security
 // Environment variables are accessed server-side for security
 
-// Client-side functions that call our server API endpoints
-export async function getProducts(limit: number = 10) {
-  try {
-    const response = await fetch(`/api/shopify/products?limit=${limit}`);
-    if (!response.ok) {
-      throw new Error(`Failed to fetch products: ${response.statusText}`);
-    }
-    return await response.json();
-  } catch (error) {
-    console.error('Error fetching products:', error);
-    throw error;
-  }
-}
-
-export async function getProductByHandle(handle: string) {
-  try {
-    const response = await fetch(`/api/shopify/products/${handle}`);
-    if (!response.ok) {
-      throw new Error(`Failed to fetch product: ${response.statusText}`);
-    }
-    return await response.json();
-  } catch (error) {
-    console.error('Error fetching product by handle:', error);
-    throw error;
-  }
-}
+// Re-export functions from the direct API implementation
+export { getProducts, getProductByHandle } from './shopify-direct';
 
 // Transform Shopify product to CleanSip format with rebellious branding
 export function transformShopifyProduct(shopifyProduct: any) {
