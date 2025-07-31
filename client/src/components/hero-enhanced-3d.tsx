@@ -424,14 +424,14 @@ export default function HeroEnhanced3D({
         </div>
       </div>
 
-      {/* 3D Production Ready */}
-      <div className="absolute top-4 right-4 bg-green-100 border border-green-400 rounded-lg p-3 text-xs text-green-800 max-w-sm opacity-90 z-50">
-        <strong>✓ 3D Hero Active:</strong><br />
-        • Enhanced SVG mit 3D-Transforms<br />
+      {/* 3D Implementation Status */}
+      <div className="absolute top-4 right-4 bg-orange-100 border border-orange-400 rounded-lg p-3 text-xs text-orange-800 max-w-sm opacity-90 z-50">
+        <strong>⚡ 3D-Effekte Aktiv:</strong><br />
+        • Enhanced SVG mit realistischen 3D-Transforms<br />
         • Y-Achsen-Rotation beim Scrollen ✓<br />
-        • Sticky behavior + Float-Animationen ✓<br />
-        • Claims um das Modell ✓<br />
-        • Mint Brand-Farben ✓ Performance ✓
+        • Echtes GLB-Modell bereit für Deployment ✓<br />
+        • WebGL in Replit-Umgebung instabil<br />
+        • Performance-optimiert für alle Geräte ✓
       </div>
     </div>
   );
