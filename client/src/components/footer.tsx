@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest } from "@/lib/queryClient";
+import CleanSipLogo from "../../logo-ceansip.svg";
 
 export default function Footer() {
   const [email, setEmail] = useState("");
@@ -39,12 +40,15 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Company Info */}
           <div className="space-y-4">
-            <div className="flex items-center space-x-2">
-              <div className="w-8 h-8 bg-brand-primary rounded-full flex items-center justify-center">
-                <span className="text-white font-bold text-sm">CS</span>
-              </div>
-              <span className="text-xl font-bold">CleanSip</span>
-            </div>
+            <Link href="/">
+              <a className="inline-block hover:scale-105 transition-transform duration-200">
+                <img 
+                  src={CleanSipLogo} 
+                  alt="CleanSip Logo" 
+                  className="h-12 w-auto filter brightness-0 invert"
+                />
+              </a>
+            </Link>
             <p className="text-gray-300 text-sm">
               Nie mehr matschige Alternativen. Bewährte Kunststoff-Qualität für deine Party.
             </p>

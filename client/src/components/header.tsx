@@ -4,6 +4,7 @@ import { ShoppingCart, Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { useToast } from "@/hooks/use-toast";
+import CleanSipLogo from "../../logo-ceansip.svg";
 
 export default function Header() {
   const [location] = useLocation();
@@ -12,7 +13,6 @@ export default function Header() {
   const { toast } = useToast();
 
   const navigation = [
-    { name: "Home", href: "/" },
     { name: "Strohhalme", href: "/category/strohhalme" },
     { name: "Party Cups", href: "/coming-soon" },
     { name: "Rührstäbchen", href: "/coming-soon" },
@@ -66,11 +66,12 @@ export default function Header() {
           {/* Logo */}
           <div className="flex items-center">
             <Link href="/">
-              <a className="flex items-center space-x-2" onClick={handleLogoClick}>
-                <div className="w-8 h-8 bg-brand-primary rounded-full flex items-center justify-center hover:scale-110 transition-transform duration-200">
-                  <span className="text-white font-bold text-sm">CS</span>
-                </div>
-                <span className="text-xl font-bold text-brand-secondary hover:text-brand-primary transition-colors duration-200">CleanSip</span>
+              <a className="flex items-center hover:scale-105 transition-transform duration-200" onClick={handleLogoClick}>
+                <img 
+                  src={CleanSipLogo} 
+                  alt="CleanSip Logo" 
+                  className="h-10 w-auto"
+                />
               </a>
             </Link>
           </div>
