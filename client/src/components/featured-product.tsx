@@ -9,10 +9,8 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { useToast } from "@/hooks/use-toast";
 import { useQuery } from "@tanstack/react-query";
 import { getProducts } from "@/lib/shopify";
-import { Straw3D } from "./straw-3d";
 import { useSubtleParticles } from "@/hooks/use-subtle-particles";
 import { FadeInSection, ScaleOnHover } from "./page-transition";
-import { ParallaxSection } from "./parallax-section";
 import productImagePath from "@assets/Produktbild-schwarzer-Strohhalm_1753910576700.jpg";
 
 export default function FeaturedProduct() {
@@ -139,20 +137,7 @@ export default function FeaturedProduct() {
           </div>
         </FadeInSection>
 
-        {/* 3D Strohhalm Visualisierung */}
         <FadeInSection delay={0.2}>
-          <div className="mb-16">
-            <div className="text-center mb-8">
-              <h3 className="text-2xl font-bold text-brand-secondary mb-2">Interaktive Produktvorschau</h3>
-              <p className="text-gray-600">Bewege die Maus, um die Qualität zu erleben</p>
-            </div>
-            <ParallaxSection offset={15}>
-              <Straw3D />
-            </ParallaxSection>
-          </div>
-        </FadeInSection>
-
-        <FadeInSection delay={0.4}>
           <div className="bg-gray-50 rounded-3xl p-8 lg:p-16">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
               {/* Product Image */}

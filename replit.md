@@ -118,7 +118,14 @@ Currently supports one live product with plans for expansion:
 
 The application follows a monorepo structure with clear separation between client, server, and shared code, making it maintainable and scalable for the planned product expansion.
 
-## Recent Changes (July 30, 2025)
+## Recent Changes (July 31, 2025)
+- **CleanSip Logo Integration**: Replaced all placeholder logos with client/logo-ceansip.svg in header and footer
+- **Logo as Home Button**: CleanSip logo now functions as home navigation, "Home" removed from menu
+- **Enhanced Product Gallery**: Horizontal scrollable thumbnail gallery with variant-specific images and smooth navigation arrows
+- **Interactive Preview Removal**: Removed 3D straw component and interactive product preview for cleaner user experience
+- **UI Polish**: Cleaned up component imports and optimized animation delays for better performance
+
+## Previous Changes (July 30, 2025)
 - **Complete Homepage Redesign**: Inspired by Simply Chocolate design patterns with professional layout structure
 - **Authentic Brand Assets**: Replaced all generic stock photos with customer's authentic product images
 - **Hero Section Overhaul**: Large hero image with clean white cans and black straw for immediate brand recognition
