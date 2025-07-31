@@ -4,10 +4,10 @@ import { cn } from "@/lib/utils";
 import { ArrowUpRight } from "lucide-react";
 import { Link } from "wouter";
 
-// Import product images
-import productBlackPath from "@assets/Produktbild-schwarzer-Strohhalm_1753910576700.jpg";
-import productBubblePath from "@assets/pexels-pixabay-531634_1753910576700.jpg";
-import productCanPath from "@assets/pexels-3170155-9462365_1753910576699.jpg";
+// Product image paths
+const productBlackPath = "/images/Produktbild-schwarzer-Strohhalm_1753910576700.jpg";
+const productBubblePath = "/images/pexels-pixabay-531634_1753910576700.jpg";
+const productCanPath = "/images/pexels-3170155-9462365_1753910576699.jpg";
 
 interface ProductCard {
   id: string;
