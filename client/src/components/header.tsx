@@ -4,6 +4,7 @@ import { ShoppingCart, Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { useToast } from "@/hooks/use-toast";
+import CartSheet from "./cart-sheet";
 import CleanSipLogo from "../../logo-ceansip.svg";
 
 export default function Header() {
@@ -22,17 +23,17 @@ export default function Header() {
   const handleLogoClick = () => {
     const newCount = logoClickCount + 1;
     setLogoClickCount(newCount);
-    
+
     if (newCount === 5) {
       // Reset counter
       setLogoClickCount(0);
-      
+
       // Confetti effect simulation
       toast({
         title: "🎉 Du hast die geheime Strohhalm-Party gefunden!",
         description: "Hier ist ein spezieller 10% Rabatt-Code: REBEL10",
       });
-      
+
       // Add some visual celebration
       const confettiColors = ['#00BFA6', '#003B46', '#FFD54F'];
       for (let i = 0; i < 10; i++) {
@@ -48,9 +49,9 @@ export default function Header() {
           confetti.style.zIndex = '9999';
           confetti.style.animation = 'fall 3s linear forwards';
           confetti.style.pointerEvents = 'none';
-          
+
           document.body.appendChild(confetti);
-          
+
           setTimeout(() => {
             document.body.removeChild(confetti);
           }, 3000);
@@ -66,13 +67,13 @@ export default function Header() {
           {/* Logo */}
           <div className="flex items-center">
             <Link href="/">
-              <a className="flex items-center hover:scale-105 transition-transform duration-200" onClick={handleLogoClick}>
-                <img 
-                  src={CleanSipLogo} 
-                  alt="CleanSip Logo" 
+              <div className="flex items-center hover:scale-105 transition-transform duration-200 cursor-pointer" onClick={handleLogoClick}>
+                <img
+                  src={CleanSipLogo}
+                  alt="CleanSip Logo"
                   className="h-10 w-auto"
                 />
-              </a>
+              </div>
             </Link>
           </div>
 
@@ -80,28 +81,20 @@ export default function Header() {
           <nav className="hidden md:flex space-x-8">
             {navigation.map((item) => (
               <Link key={item.name} href={item.href}>
-                <a className={`transition-colors ${
-                  location === item.href 
-                    ? "text-brand-primary font-medium" 
-                    : "text-gray-700 hover:text-brand-primary"
-                }`}>
+                <span className={`transition-colors cursor-pointer ${location === item.href
+                  ? "text-brand-primary font-medium"
+                  : "text-gray-700 hover:text-brand-primary"
+                  }`}>
                   {item.name}
-                </a>
+                </span>
               </Link>
             ))}
           </nav>
 
           {/* Cart & Mobile Menu */}
           <div className="flex items-center space-x-4">
-            <Button variant="ghost" size="sm" className="relative">
-              <ShoppingCart className="h-5 w-5" />
-              {cartItemCount > 0 && (
-                <span className="absolute -top-1 -right-1 bg-brand-primary text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
-                  {cartItemCount}
-                </span>
-              )}
-            </Button>
-            
+            <CartSheet />
+
             {/* Mobile Menu */}
             <Sheet>
               <SheetTrigger asChild>
@@ -113,11 +106,10 @@ export default function Header() {
                 <nav className="flex flex-col space-y-4 mt-8">
                   {navigation.map((item) => (
                     <Link key={item.name} href={item.href}>
-                      <a className={`text-lg transition-colors ${
-                        location === item.href 
-                          ? "text-brand-primary font-medium" 
-                          : "text-gray-700 hover:text-brand-primary"
-                      }`}>
+                      <a className={`text-lg transition-colors ${location === item.href
+                        ? "text-brand-primary font-medium"
+                        : "text-gray-700 hover:text-brand-primary"
+                        }`}>
                         {item.name}
                       </a>
                     </Link>

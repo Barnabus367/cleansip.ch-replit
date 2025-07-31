@@ -123,10 +123,10 @@ export default function NewsletterPopup() {
               required
               className="bg-white/10 border-white/20 text-white placeholder:text-gray-300 focus:border-brand-primary"
             />
-            <Button 
-              type="submit" 
+            <Button
+              type="submit"
               disabled={isSubmitting}
-              className="w-full bg-brand-primary hover:bg-brand-primary/90 text-black font-bold py-3"
+              className="w-full bg-brand-primary hover:bg-brand-primary/90 text-white font-bold py-3"
             >
               {isSubmitting ? "Wird angemeldet..." : "🔥 REBELLION BEITRETEN"}
             </Button>
@@ -137,7 +137,7 @@ export default function NewsletterPopup() {
             <p className="text-xs text-gray-400">
               Kein Spam. Nur wichtige Updates und exklusive Angebote.
             </p>
-            <button 
+            <button
               onClick={() => setIsOpen(false)}
               className="text-xs text-gray-500 hover:text-gray-300 mt-2 underline"
             >

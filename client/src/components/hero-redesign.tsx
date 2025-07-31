@@ -4,6 +4,7 @@ import { Link } from "wouter";
 import { cn } from "@/lib/utils";
 import { useSubtleParticles } from "@/hooks/use-subtle-particles";
 import { FadeInSection } from "./page-transition";
+import { motion, useScroll, useTransform } from "framer-motion";
 import heroImagePath from "@assets/pexels-3170155-9462365_1753910576699.jpg";
 
 // Professional Trust Badge Icons
@@ -24,6 +25,11 @@ export default function HeroRedesign() {
   const [isVisible, setIsVisible] = useState(false);
   const { spawnParticle } = useSubtleParticles();
 
+  // Parallax scroll effects
+  const { scrollY } = useScroll();
+  const backgroundY = useTransform(scrollY, [0, 800], [0, -200]);
+  const overlayOpacity = useTransform(scrollY, [0, 400], [0.6, 0.9]);
+
   useEffect(() => {
     const timer = setTimeout(() => setIsVisible(true), 100);
     return () => clearTimeout(timer);
@@ -34,7 +40,7 @@ export default function HeroRedesign() {
     const rect = (e.target as HTMLElement).getBoundingClientRect();
     const centerX = rect.left + rect.width / 2;
     const centerY = rect.top + rect.height / 2;
-    
+
     for (let i = 0; i < 5; i++) {
       setTimeout(() => {
         spawnParticle(centerX, centerY);
@@ -44,111 +50,70 @@ export default function HeroRedesign() {
 
   return (
     <section className="relative min-h-screen bg-white overflow-hidden">
-      {/* Hero Image Background with subtle blur overlay */}
-      <div className="absolute inset-0">
-        <img 
+      {/* Hero Image Background with Parallax Effect */}
+      <motion.div
+        style={{ y: backgroundY }}
+        className="absolute inset-0 scale-110"
+      >
+        <img
           src={heroImagePath}
           alt="CleanSip Premium Strohhalme - Endlich wieder echte Strohhalme"
           className="w-full h-full object-cover filter blur-[1px]"
         />
-        {/* Sophisticated overlay for premium feel */}
-        <div className="absolute inset-0 bg-gradient-to-br from-black/60 via-black/30 to-transparent"></div>
+        {/* Dynamic overlay with scroll-based opacity */}
+        <motion.div
+          style={{ opacity: overlayOpacity }}
+          className="absolute inset-0 bg-gradient-to-br from-black/60 via-black/30 to-transparent"
+        />
         <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent"></div>
-      </div>
+      </motion.div>
 
       {/* Content Container */}
       <div className="relative z-10 min-h-screen flex items-center justify-center">
         <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 py-20 text-center">
-          
-          {/* Iconic Three-Line Headline */}
+
+          {/* Enhanced Typography - Premium Headlines */}
           <FadeInSection>
             <h1 className={cn(
-              "text-6xl sm:text-7xl lg:text-8xl xl:text-9xl font-black text-white mb-8",
-              "font-inter tracking-tighter leading-[0.85]",
-              "drop-shadow-2xl",
+              "text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-black text-white mb-8",
+              "font-inter tracking-[-0.04em] leading-[0.85]",
+              "drop-shadow-2xl text-rendering-optimizelegibility",
               isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
             )}>
-              Endlich wieder
+              <span className="text-white">Endlich wieder</span>
               <br />
               <span className="text-brand-primary drop-shadow-[0_0_30px_rgba(0,191,166,0.5)]">echte</span>
               <br />
-              Strohhalme.
+              <span className="text-white">Strohhalme.</span>
             </h1>
           </FadeInSection>
 
-          {/* Punchy Subtext */}
+          {/* Premium Subtext with Enhanced Readability */}
           <FadeInSection delay={0.2}>
-            <p className="text-xl lg:text-2xl text-gray-100 mb-16 max-w-3xl mx-auto leading-relaxed font-medium">
-              Keine aufweichenden Alternativen. Keine Kompromisse. 
+            <p className="text-xl lg:text-2xl text-gray-100 mb-16 max-w-4xl mx-auto leading-relaxed font-medium tracking-[-0.005em]">
+              Schluss mit matschigen Öko-Alternativen. Keine Bevormundung.
               <br className="hidden sm:block" />
               Nur bewährte Qualität für erwachsene Ansprüche.
             </p>
           </FadeInSection>
 
-          {/* Iconic CTA Button */}
+          {/* Iconic CTA Button - Direct to Product */}
           <FadeInSection delay={0.4}>
-            <Link to="/shop">
-              <Button 
+            <Link to="/product/plastik-strohhalm">
+              <Button
                 size="lg"
                 onClick={handleCTAClick}
                 className={cn(
-                  "bg-brand-primary hover:bg-brand-primary/90 text-black font-bold",
-                  "text-xl px-16 py-6 rounded-full mb-20",
+                  "bg-brand-primary hover:bg-brand-primary/90 text-white font-bold",
+                  "text-xl px-16 py-6 rounded-full",
                   "shadow-[0_20px_40px_rgba(0,191,166,0.3)] hover:shadow-[0_25px_50px_rgba(0,191,166,0.4)]",
                   "transform hover:scale-110 transition-all duration-300 hover:-translate-y-2",
-                  "tracking-wide uppercase letterspacing-wider"
+                  "tracking-wide uppercase"
                 )}
               >
-                Jetzt bestellen
+                Jetzt zurückholen
               </Button>
             </Link>
-          </FadeInSection>
-
-          {/* Professional Trust Badge Bar */}
-          <FadeInSection delay={0.6}>
-            <div className="flex flex-wrap justify-center gap-4 lg:gap-6 max-w-5xl mx-auto">
-              
-              {/* Swiss Quality Badge */}
-              <TrustBadge 
-                icon={
-                  <svg viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
-                    <path d="M12,2L13.09,8.26L18,9L13.09,9.74L12,16L10.91,9.74L6,9L10.91,8.26L12,2Z"/>
-                  </svg>
-                }
-                text="Swiss Quality"
-              />
-
-              {/* Reliability Shield Badge */}
-              <TrustBadge 
-                icon={
-                  <svg viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
-                    <path d="M12,1L3,5V11C3,16.55 6.84,21.74 12,23C17.16,21.74 21,16.55 21,11V5L12,1M10.5,17L6.5,13L7.91,11.59L10.5,14.17L16.59,8.09L18,9.5L10.5,17Z"/>
-                  </svg>
-                }
-                text="Zuverlässig"
-              />
-
-              {/* Customer Satisfaction Badge */}
-              <TrustBadge 
-                icon={
-                  <svg viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
-                    <path d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.46,13.97L5.82,21L12,17.27Z"/>
-                  </svg>
-                }
-                text="4.8★ Bewertung"
-              />
-
-              {/* Anti-Mainstream Badge */}
-              <TrustBadge 
-                icon={
-                  <svg viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
-                    <path d="M13,14H11V10H13M13,18H11V16H13M1,21H23L12,2L1,21Z"/>
-                  </svg>
-                }
-                text="Anti-Trend"
-              />
-
-            </div>
           </FadeInSection>
 
         </div>

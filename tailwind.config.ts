@@ -7,14 +7,18 @@ export default {
     extend: {
       fontFamily: {
         sans: ['Inter', 'system-ui', 'sans-serif'],
+        inter: ['Inter', 'system-ui', 'sans-serif'],
+      },
+      borderWidth: {
+        '3': '3px',
       },
       colors: {
         // CleanSip brand colors
         'brand-primary': '#00BFA6',
-        'brand-secondary': '#003B46', 
+        'brand-secondary': '#003B46',
         'brand-accent': '#FFD54F',
         'brand-neutral': '#F9FAFB',
-        
+
         // Shadcn colors
         background: "var(--background)",
         foreground: "var(--foreground)",

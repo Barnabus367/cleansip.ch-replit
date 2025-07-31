@@ -6,6 +6,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { useToast } from "@/hooks/use-toast";
+import { useCart } from "@/hooks/use-cart";
 import { useQuery } from "@tanstack/react-query";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
@@ -18,6 +19,7 @@ export default function Product() {
   const params = useParams();
   const [location] = useLocation();
   const { toast } = useToast();
+  const { addToCart } = useCart();
   const [quantity, setQuantity] = useState(1);
   const [selectedColor, setSelectedColor] = useState("");
   const [selectedVariant, setSelectedVariant] = useState<any>(null);
@@ -41,13 +43,13 @@ export default function Product() {
     if (product && product.availableColors?.length > 0) {
       const defaultColor = product.defaultColor || product.availableColors[0];
       setSelectedColor(defaultColor);
-      
+
       // Find first variant for the default color
       const colorVariants = product.colorVariants[defaultColor];
       if (colorVariants?.length > 0) {
         setSelectedVariant(colorVariants[0]);
       }
-      
+
       // Set current image from product images
       if (product.images?.length > 0) {
         setCurrentImage(product.images[0].url);
@@ -61,14 +63,14 @@ export default function Product() {
       const colorVariants = product.colorVariants[selectedColor];
       const variant = colorVariants[0];
       setSelectedVariant(variant);
-      
+
       // Find the corresponding thumbnail index
       const thumbnails = getThumbnailGallery();
       const thumbnailIndex = thumbnails.findIndex(t => t.color === selectedColor);
       if (thumbnailIndex !== -1) {
         setCurrentThumbnailIndex(thumbnailIndex);
       }
-      
+
       // Smooth image transition
       setImageTransition(true);
       setTimeout(() => {
@@ -83,7 +85,7 @@ export default function Product() {
   }, [selectedColor, product]);
 
   const handleAddToCart = () => {
-    if (!selectedVariant) {
+    if (!selectedVariant || !product) {
       toast({
         title: "Bitte wählen Sie eine Variante",
         description: "Wählen Sie eine Farbe aus, bevor Sie das Produkt hinzufügen.",
@@ -92,9 +94,14 @@ export default function Product() {
       return;
     }
 
-    toast({
-      title: "Erfolgreich hinzugefügt",
-      description: `${quantity}x ${product.title} (${selectedColor}) wurde hinzugefügt.`,
+    // Add to cart using the context
+    addToCart({
+      variantId: selectedVariant.id,
+      title: product.title,
+      color: selectedColor,
+      price: selectedVariant.price,
+      image: currentImage || (product.images?.[0]?.url) || '',
+      sku: selectedVariant.sku,
     });
   };
 
@@ -113,9 +120,9 @@ export default function Product() {
   // Create thumbnail gallery data from variants and product images
   const getThumbnailGallery = (): ThumbnailType[] => {
     if (!product) return [];
-    
+
     const thumbnails: ThumbnailType[] = [];
-    
+
     // Add variant images first (each color variant)
     if (product.availableColors && product.colorVariants) {
       product.availableColors.forEach((color: string) => {
@@ -135,7 +142,7 @@ export default function Product() {
         }
       });
     }
-    
+
     // Add additional product images
     if (product.images) {
       product.images.forEach((image: any, index: number) => {
@@ -153,7 +160,7 @@ export default function Product() {
         }
       });
     }
-    
+
     return thumbnails;
   };
 
@@ -162,10 +169,10 @@ export default function Product() {
   // Scroll thumbnail gallery
   const scrollThumbnails = (direction: 'left' | 'right') => {
     if (!thumbnailScrollRef.current) return;
-    
+
     const container = thumbnailScrollRef.current;
     const scrollAmount = 200; // Adjust based on thumbnail width
-    
+
     if (direction === 'left') {
       container.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
     } else {
@@ -176,18 +183,18 @@ export default function Product() {
   // Handle thumbnail click
   const handleThumbnailClick = (thumbnail: any, index: number) => {
     setCurrentThumbnailIndex(index);
-    
+
     // Smooth image transition
     setImageTransition(true);
     setTimeout(() => {
       setCurrentImage(thumbnail.url);
-      
+
       // If it's a variant thumbnail, also update the selected color
       if (thumbnail.type === 'variant' && thumbnail.color) {
         setSelectedColor(thumbnail.color);
         setSelectedVariant(thumbnail.variant);
       }
-      
+
       setImageTransition(false);
     }, 150);
   };
@@ -200,8 +207,19 @@ export default function Product() {
     { icon: Palette, label: `${product?.availableColors?.length || 0} Farben`, tooltip: "Verschiedene Farben verfügbar" }
   ];
 
-  // Color mapping for visual color indicators
+  // Color mapping for visual color indicators - Shopify variant mapping
   const colorMapping: { [key: string]: string } = {
+    // Shopify-spezifische Varianten (exakt wie bei Shopify benannt)
+    "100 Stk. farbig": "#6B7280",           // Grau für "farbig" Mix
+    "100 Stk. Blau": "#2563EB",            // Blau
+    "100 Stk. Grün": "#16A34A",            // Grün  
+    "100 Stk. Gelb": "#EAB308",            // Gelb
+    "100 Stk. Rot": "#DC2626",             // Rot
+    "100 Stk. Rosa": "#EC4899",            // Rosa/Pink
+    "100 Stk. Schwarz": "#000000",         // Schwarz
+    "100 Stk. Weiß": "#FFFFFF",            // Weiß
+
+    // Fallback für traditionelle Farbnamen
     'Black': '#000000',
     'Schwarz': '#000000',
     'White': '#FFFFFF',
@@ -215,7 +233,8 @@ export default function Product() {
     'Yellow': '#EAB308',
     'Gelb': '#EAB308',
     'Pink': '#EC4899',
-    'Rosa': '#EC4899'
+    'Rosa': '#EC4899',
+    'farbig': '#6B7280'
   };
 
   if (isLoading) {
@@ -254,7 +273,7 @@ export default function Product() {
       <Header />
       <main className="min-h-screen bg-gradient-to-br from-gray-50 to-brand-primary/5 pb-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          
+
           {/* Breadcrumb */}
           <FadeInSection>
             <div className="mb-8">
@@ -269,17 +288,17 @@ export default function Product() {
 
           {/* Main Product Layout - Inspired by Apple */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
-            
+
             {/* Left Column - Product Images */}
             <FadeInSection delay={0.2}>
               <div className="space-y-6">
-                
+
                 {/* Main Product Image Card - Square like Apple */}
                 <Card className="overflow-hidden border-2 border-brand-primary/20 shadow-xl hover:shadow-2xl transition-all duration-500">
                   <CardContent className="p-0 aspect-square relative bg-white">
                     {/* TODO: Replace with your authentic product photo */}
                     {/* Upload your high-quality square product photo here */}
-                    <img 
+                    <img
                       src={currentImage || (product.images?.[0]?.url)}
                       alt={`${product.title} - ${selectedColor || 'CleanSip Premium Strohhalme'}`}
                       className={cn(
@@ -287,7 +306,7 @@ export default function Product() {
                         imageTransition ? "opacity-50 scale-105" : "opacity-100 scale-100"
                       )}
                     />
-                    
+
                     {/* Color indicator overlay */}
                     {selectedColor && (
                       <div className="absolute top-4 right-4 bg-brand-primary text-black px-3 py-1.5 rounded-full text-sm font-bold shadow-lg">
@@ -298,7 +317,7 @@ export default function Product() {
                     {/* Lifestyle photo mini-overlay */}
                     {/* TODO: Add your lifestyle/usage photo here as small overlay */}
                     <div className="absolute bottom-4 left-4 w-16 h-16 rounded-lg overflow-hidden border-2 border-white shadow-lg opacity-80 hover:opacity-100 transition-opacity">
-                      <img 
+                      <img
                         src={product.images?.[1]?.url || currentImage}
                         alt="Lifestyle"
                         className="w-full h-full object-cover"
@@ -319,7 +338,7 @@ export default function Product() {
                     >
                       <ChevronLeft className="w-4 h-4 text-gray-600" />
                     </Button>
-                    
+
                     <Button
                       variant="ghost"
                       size="icon"
@@ -330,7 +349,7 @@ export default function Product() {
                     </Button>
 
                     {/* Scrollable Thumbnail Container */}
-                    <div 
+                    <div
                       ref={thumbnailScrollRef}
                       className="flex gap-3 overflow-x-auto scrollbar-hide pb-2 px-8 scroll-smooth"
                       style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
@@ -342,24 +361,24 @@ export default function Product() {
                           className={cn(
                             "flex-shrink-0 aspect-square w-20 h-20 rounded-xl overflow-hidden border-2 transition-all duration-300 shadow-md hover:shadow-lg relative group",
                             currentImage === thumbnail.url || currentThumbnailIndex === index
-                              ? 'border-brand-primary shadow-brand-primary/30 shadow-lg' 
+                              ? 'border-brand-primary shadow-brand-primary/30 shadow-lg'
                               : 'border-gray-200 hover:border-brand-primary/50'
                           )}
                         >
                           {/* TODO: Replace with your authentic variant/product thumbnails */}
-                          <img 
+                          <img
                             src={thumbnail.url}
                             alt={thumbnail.alt}
                             className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
                           />
-                          
+
                           {/* Color indicator for variant thumbnails */}
                           {thumbnail.type === 'variant' && thumbnail.color && (
                             <div className="absolute bottom-1 right-1 w-3 h-3 rounded-full border border-white shadow-sm"
-                                 style={{ backgroundColor: colorMapping[thumbnail.color] || '#6B7280' }}
+                              style={{ backgroundColor: colorMapping[thumbnail.color] || '#6B7280' }}
                             />
                           )}
-                          
+
                           {/* Selection indicator */}
                           {(currentImage === thumbnail.url || currentThumbnailIndex === index) && (
                             <div className="absolute inset-0 bg-brand-primary/10 flex items-center justify-center">
@@ -369,7 +388,7 @@ export default function Product() {
                         </button>
                       ))}
                     </div>
-                    
+
                     {/* Scroll indicator dots */}
                     {thumbnailGallery.length > 4 && (
                       <div className="flex justify-center mt-3 gap-1">
@@ -378,8 +397,8 @@ export default function Product() {
                             key={i}
                             className={cn(
                               "w-1.5 h-1.5 rounded-full transition-colors",
-                              Math.floor(currentThumbnailIndex / 4) === i 
-                                ? 'bg-brand-primary' 
+                              Math.floor(currentThumbnailIndex / 4) === i
+                                ? 'bg-brand-primary'
                                 : 'bg-gray-300'
                             )}
                           />
@@ -394,7 +413,7 @@ export default function Product() {
             {/* Right Column - Product Details */}
             <FadeInSection delay={0.4}>
               <div className="space-y-8 lg:pl-8">
-                
+
                 {/* Product Title - Very Large and Bold like Apple */}
                 <div>
                   <h1 className="text-4xl lg:text-6xl font-black text-brand-secondary leading-tight mb-4">
@@ -405,36 +424,43 @@ export default function Product() {
                   )}
                 </div>
 
-                {/* Color Variant Selection with Color Circles */}
+                {/* Color Variant Selection with Color Circles - Benutzerfreundliche Farbauswahl */}
                 {product.availableColors && product.availableColors.length > 1 && (
                   <div className="space-y-4">
                     <h3 className="text-lg font-semibold text-gray-900">Farbe</h3>
                     <div className="flex flex-wrap gap-3">
-                      {product.availableColors.map((color: string) => (
-                        <Tooltip key={color}>
-                          <TooltipTrigger asChild>
-                            <button
-                              onClick={() => setSelectedColor(color)}
-                              className={cn(
-                                "flex items-center gap-3 px-4 py-3 rounded-full border-2 transition-all duration-200 hover:scale-105",
-                                selectedColor === color
-                                  ? 'border-brand-primary bg-brand-primary text-black shadow-lg'
-                                  : 'border-gray-300 bg-white text-gray-700 hover:border-brand-primary/50'
-                              )}
-                            >
-                              {/* Color circle indicator */}
-                              <div 
-                                className="w-5 h-5 rounded-full border-2 border-gray-300"
-                                style={{ backgroundColor: colorMapping[color] || '#6B7280' }}
-                              />
-                              <span className="font-medium">{color}</span>
-                            </button>
-                          </TooltipTrigger>
-                          <TooltipContent>
-                            <p>Auswählen: {color}</p>
-                          </TooltipContent>
-                        </Tooltip>
-                      ))}
+                      {product.availableColors.map((color: string) => {
+                        // Benutzerfreundliche Farbnamen (wie in featured-product.tsx)
+                        const displayName = color
+                          .replace("100 Stk. ", "")  // Entferne "100 Stk. " Präfix
+                          .replace("farbig", "Bunt"); // Mache "farbig" zu "Bunt"
+
+                        return (
+                          <Tooltip key={color}>
+                            <TooltipTrigger asChild>
+                              <button
+                                onClick={() => setSelectedColor(color)}
+                                className={cn(
+                                  "flex items-center gap-3 px-4 py-3 rounded-full border-2 transition-all duration-200 hover:scale-105",
+                                  selectedColor === color
+                                    ? 'border-brand-primary bg-brand-primary text-white shadow-lg'
+                                    : 'border-gray-300 bg-white text-gray-700 hover:border-brand-primary/50'
+                                )}
+                              >
+                                {/* Color circle indicator */}
+                                <div
+                                  className="w-5 h-5 rounded-full border-2 border-gray-300 shadow-sm"
+                                  style={{ backgroundColor: colorMapping[color] || '#6B7280' }}
+                                />
+                                <span className="font-medium">{displayName}</span>
+                              </button>
+                            </TooltipTrigger>
+                            <TooltipContent>
+                              <p>Auswählen: {displayName}</p>
+                            </TooltipContent>
+                          </Tooltip>
+                        );
+                      })}
                     </div>
                   </div>
                 )}
@@ -473,7 +499,7 @@ export default function Product() {
                 {/* Product Description - Minimal */}
                 <div className="prose prose-sm max-w-none text-gray-600">
                   <p className="text-lg leading-relaxed">
-                    Zuverlässige Plastikstrohhalme für alle, die keine Kompromisse eingehen. 
+                    Zuverlässige Plastikstrohhalme für alle, die keine Kompromisse eingehen.
                     Während Papier-Alternativen versagen, bleiben CleanSip Strohhalme stabil.
                   </p>
                 </div>
@@ -496,7 +522,7 @@ export default function Product() {
         <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 shadow-2xl z-50">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
             <div className="flex items-center justify-between">
-              
+
               {/* Price Info on Mobile */}
               <div className="lg:hidden">
                 <div className="text-2xl font-bold text-brand-primary">
@@ -508,10 +534,10 @@ export default function Product() {
               </div>
 
               {/* CTA Button */}
-              <Button 
+              <Button
                 onClick={handleAddToCart}
                 size="lg"
-                className="bg-brand-primary hover:bg-brand-primary/90 text-black font-bold text-lg px-8 py-4 rounded-full shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105 lg:w-full"
+                className="bg-brand-primary hover:bg-brand-primary/90 text-white font-bold text-lg px-8 py-4 rounded-full shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105 lg:w-full"
               >
                 <ShoppingCart className="mr-3 h-6 w-6" />
                 Jetzt zurückholen

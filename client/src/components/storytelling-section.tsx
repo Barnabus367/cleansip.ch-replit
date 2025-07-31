@@ -6,10 +6,10 @@ export default function StorytellingSection() {
   return (
     <section className="py-24 bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        
+
         {/* Main Story Content */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center mb-24">
-          
+
           {/* Left - Story Text */}
           <div>
             <FadeInSection>
@@ -20,7 +20,7 @@ export default function StorytellingSection() {
 
             <FadeInSection delay={0.2}>
               <h2 className="text-4xl lg:text-5xl font-bold text-brand-secondary mb-8 leading-tight">
-                Keine Kompromisse. 
+                Keine Kompromisse.
                 <span className="text-brand-primary"> Nur Qualität.</span>
               </h2>
             </FadeInSection>
@@ -28,21 +28,21 @@ export default function StorytellingSection() {
             <FadeInSection delay={0.4}>
               <div className="prose prose-lg text-gray-700 space-y-6">
                 <p>
-                  <strong>Wir haben genug von Öko-Heuchelei.</strong> Während alle Welt auf den 
-                  Papier-Strohhalm-Zug aufspringt, vergessen sie das Wichtigste: 
-                  <span className="text-brand-primary font-semibold">die Benutzererfahrung</span>.
+                  <strong>CleanSip steht für bewährte Qualität</strong> in einer Zeit voller Experimente.
+                  Während andere auf unausgereifte Alternativen setzen,
+                  <span className="text-brand-primary font-semibold"> liefern wir zuverlässige Lösungen</span>.
                 </p>
-                
+
                 <p>
-                  CleanSip steht für das, was Millionen von Menschen wirklich wollen: 
-                  <strong>Strohhalme, die funktionieren</strong>. Keine matschigen Kompromisse, 
-                  keine überteuerten "nachhaltigen" Alternativen, die nach zwei Schlucken versagen.
+                  <strong>Qualität ist in der Schweiz legal</strong> - und wir nutzen diese Freiheit.
+                  Unsere Strohhalme sind aus bewährtem Kunststoff gefertigt und machen genau das,
+                  was sie sollen: <span className="text-brand-primary font-semibold">durchhalten bis zum letzten Tropfen</span>.
                 </p>
-                
+
                 <p>
-                  <strong>Wir sind ehrlich:</strong> Unsere Strohhalme sind aus Plastik. 
-                  Und das ist auch gut so. Denn sie machen genau das, was ein Strohhalm 
-                  machen soll - <span className="text-brand-primary font-semibold">durchhalten bis zum letzten Tropfen</span>.
+                  <strong>Für Erwachsene gemacht:</strong> Keine Kompromisse bei Funktionalität.
+                  Keine Bevormundung durch untaugliche Alternativen.
+                  Nur solide Schweizer Qualität für anspruchsvolle Menschen.
                 </p>
               </div>
             </FadeInSection>
@@ -52,7 +52,7 @@ export default function StorytellingSection() {
           <div>
             <FadeInSection delay={0.6}>
               <div className="relative">
-                <img 
+                <img
                   src={storytellingImagePath}
                   alt="CleanSip Strohhalme - Vielfalt und Qualität"
                   className="rounded-2xl shadow-2xl w-full"
@@ -69,14 +69,14 @@ export default function StorytellingSection() {
         {/* Values Grid */}
         <FadeInSection delay={0.8}>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            
+
             <div className="text-center p-8 bg-white rounded-2xl shadow-lg">
               <div className="w-16 h-16 bg-brand-primary rounded-full flex items-center justify-center mx-auto mb-6">
                 <span className="text-2xl">💪</span>
               </div>
               <h3 className="text-xl font-bold text-brand-secondary mb-4">Stärke & Zuverlässigkeit</h3>
               <p className="text-gray-600">
-                Unsere Strohhalme halten durch - vom ersten bis zum letzten Schluck. 
+                Unsere Strohhalme halten durch - vom ersten bis zum letzten Schluck.
                 Keine bösen Überraschungen.
               </p>
             </div>
@@ -87,7 +87,7 @@ export default function StorytellingSection() {
               </div>
               <h3 className="text-xl font-bold text-brand-secondary mb-4">Ehrlichkeit & Transparenz</h3>
               <p className="text-gray-600">
-                Wir verkaufen Plastik-Strohhalme und stehen dazu. 
+                Wir verkaufen Plastik-Strohhalme und stehen dazu.
                 Keine Greenwashing-Märchen.
               </p>
             </div>
@@ -98,7 +98,7 @@ export default function StorytellingSection() {
               </div>
               <h3 className="text-xl font-bold text-brand-secondary mb-4">Schweizer Qualität</h3>
               <p className="text-gray-600">
-                Produziert nach höchsten Standards. 
+                Produziert nach höchsten Standards.
                 Qualität, auf die Sie sich verlassen können.
               </p>
             </div>
@@ -110,7 +110,7 @@ export default function StorytellingSection() {
         <FadeInSection delay={1.0}>
           <div className="bg-brand-secondary text-white rounded-3xl p-12 mt-24 text-center">
             <blockquote className="text-2xl lg:text-3xl font-light italic mb-8">
-              "Endlich wieder Strohhalme, die nicht nach zwei Minuten auseinanderfallen. 
+              "Endlich wieder Strohhalme, die nicht nach zwei Minuten auseinanderfallen.
               CleanSip macht das, was alle anderen versprechen aber nicht halten."
             </blockquote>
             <div className="text-brand-primary font-semibold">

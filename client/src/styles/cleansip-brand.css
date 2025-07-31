@@ -1,0 +1,242 @@
+/* CleanSip Brand Consistency Layer - Advanced Typography & Component Standards */
+@layer components {
+  
+  /* ===== TYPOGRAPHY SYSTEM ===== */
+  
+  /* Hero Typography - Maximum Impact */
+  .hero-title {
+    @apply font-black;
+    font-size: clamp(4rem, 8vw, 10rem);
+    line-height: 0.85;
+    letter-spacing: -0.04em;
+    text-rendering: optimizeLegibility;
+  }
+  
+  /* Section Headers - Premium Feel */
+  .section-title {
+    @apply font-black text-brand-secondary;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    text-rendering: optimizeLegibility;
+  }
+  
+  /* Product Titles - Strong but readable */
+  .product-title {
+    @apply font-bold text-brand-secondary;
+    font-size: clamp(1.75rem, 4vw, 3rem);
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+  }
+  
+  /* Card Titles - Consistent across components */
+  .card-title {
+    @apply font-semibold text-brand-secondary text-xl;
+    line-height: 1.3;
+  }
+  
+  /* Body Text - Premium readability */
+  .body-premium {
+    @apply font-medium text-gray-700 text-lg;
+    line-height: 1.7;
+  }
+  
+  /* Rebellion Quote - CleanSip specific */
+  .rebellion-quote {
+    @apply font-bold text-brand-primary text-xl italic;
+    line-height: 1.5;
+  }
+  
+  /* ===== BUTTON SYSTEM ===== */
+  
+  /* Primary CleanSip Button */
+  .btn-cleansip-primary {
+    @apply bg-brand-primary hover:bg-brand-primary/90 text-white font-bold;
+    @apply px-8 py-4 rounded-full transition-all duration-300;
+    @apply shadow-[0_10px_30px_rgba(0,191,166,0.3)] hover:shadow-[0_15px_40px_rgba(0,191,166,0.4)];
+    @apply transform hover:scale-105 hover:-translate-y-1;
+  }
+  
+  /* Secondary CleanSip Button */
+  .btn-cleansip-secondary {
+    @apply bg-brand-secondary hover:bg-brand-secondary/90 text-white font-bold;
+    @apply px-8 py-4 rounded-full transition-all duration-300;
+    @apply shadow-[0_10px_30px_rgba(0,59,70,0.3)] hover:shadow-[0_15px_40px_rgba(0,59,70,0.4)];
+    @apply transform hover:scale-105 hover:-translate-y-1;
+  }
+  
+  /* Outline CleanSip Button */
+  .btn-cleansip-outline {
+    @apply border-2 border-brand-primary text-brand-primary hover:bg-brand-primary hover:text-black font-bold;
+    @apply px-8 py-4 rounded-full transition-all duration-300;
+    @apply hover:shadow-[0_10px_30px_rgba(0,191,166,0.3)];
+    @apply transform hover:scale-105;
+  }
+  
+  /* ===== CARD SYSTEM ===== */
+  
+  /* Premium Card Base */
+  .card-premium {
+    @apply bg-white rounded-3xl shadow-xl border border-gray-100;
+    @apply hover:shadow-2xl transition-all duration-500;
+    @apply transform hover:scale-[1.02] hover:-translate-y-2;
+  }
+  
+  /* Testimonial Card Specific */
+  .card-testimonial {
+    @apply card-premium p-8 lg:p-10 relative group;
+  }
+  
+  /* Product Card Specific */
+  .card-product {
+    @apply card-premium p-6 overflow-hidden;
+  }
+  
+  /* ===== BADGE SYSTEM ===== */
+  
+  /* CleanSip Brand Badge */
+  .badge-cleansip {
+    @apply bg-brand-primary text-white font-bold px-6 py-3 rounded-full text-sm;
+    @apply shadow-lg uppercase tracking-wider;
+  }
+  
+  /* Trust Badge */
+  .badge-trust {
+    @apply bg-green-600 text-white font-bold px-4 py-2 rounded-full text-xs;
+    @apply uppercase tracking-wider shadow-md;
+  }
+  
+  /* Swiss Quality Badge */
+  .badge-swiss {
+    @apply bg-red-600 text-white font-bold px-4 py-2 rounded-full text-xs;
+    @apply uppercase tracking-wider shadow-md;
+  }
+  
+  /* ===== COLOR CONSISTENCY ===== */
+  
+  /* Primary Brand Colors - Enforce consistency */
+  .text-cleansip-primary {
+    color: #00BFA6 !important;
+  }
+  
+  .text-cleansip-secondary {
+    color: #003B46 !important;
+  }
+  
+  .text-cleansip-accent {
+    color: #FFD54F !important;
+  }
+  
+  .bg-cleansip-primary {
+    background-color: #00BFA6 !important;
+  }
+  
+  .bg-cleansip-secondary {
+    background-color: #003B46 !important;
+  }
+  
+  .bg-cleansip-accent {
+    background-color: #FFD54F !important;
+  }
+  
+  .border-cleansip-primary {
+    border-color: #00BFA6 !important;
+  }
+  
+  /* ===== ANIMATION CONSISTENCY ===== */
+  
+  /* Standard Hover Animation */
+  .hover-lift {
+    @apply transition-all duration-300 transform hover:scale-105 hover:-translate-y-1;
+  }
+  
+  /* Card Hover Animation */
+  .hover-card {
+    @apply transition-all duration-500 transform hover:scale-[1.02] hover:-translate-y-2;
+    @apply hover:shadow-2xl;
+  }
+  
+  /* Button Hover Animation */
+  .hover-button {
+    @apply transition-all duration-300 transform hover:scale-110 hover:-translate-y-2;
+  }
+  
+  /* ===== LAYOUT CONSISTENCY ===== */
+  
+  /* Section Spacing */
+  .section-spacing {
+    @apply py-24;
+  }
+  
+  /* Container Standard */
+  .container-cleansip {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+  
+  /* Grid Standard */
+  .grid-testimonials {
+    @apply grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12;
+  }
+  
+  .grid-features {
+    @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8;
+  }
+  
+  /* ===== CLEANSIP VOICE & TONE ===== */
+  
+  /* Rebellious Headlines */
+  .headline-rebellious {
+    @apply section-title;
+  }
+  
+  .headline-rebellious::after {
+    content: " 🔥";
+    @apply text-2xl;
+  }
+  
+  /* Anti-Mainstream Text */
+  .text-anti-mainstream {
+    @apply font-bold text-brand-secondary;
+  }
+  
+  .text-anti-mainstream::before {
+    content: "⚡ ";
+  }
+  
+  /* Swiss Pride Text */
+  .text-swiss-pride {
+    @apply font-semibold text-brand-secondary;
+  }
+  
+  .text-swiss-pride::before {
+    content: "🇨🇭 ";
+  }
+  
+  /* ===== RESPONSIVE CONSISTENCY ===== */
+  
+  /* Mobile-first Typography Scaling */
+  .text-responsive-xl {
+    @apply text-2xl md:text-3xl lg:text-4xl xl:text-5xl;
+  }
+  
+  .text-responsive-lg {
+    @apply text-xl md:text-2xl lg:text-3xl;
+  }
+  
+  .text-responsive-md {
+    @apply text-lg md:text-xl lg:text-2xl;
+  }
+  
+  /* ===== PERFORMANCE OPTIMIZATIONS ===== */
+  
+  /* GPU-accelerated animations */
+  .gpu-accelerated {
+    @apply will-change-transform;
+    transform: translateZ(0);
+  }
+  
+  /* Smooth scrolling elements */
+  .smooth-scroll {
+    @apply transition-transform duration-300 ease-out;
+  }
+}

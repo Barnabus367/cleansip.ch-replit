@@ -3,7 +3,7 @@ import HeroRedesign from "@/components/hero-redesign";
 import TrustSignals from "@/components/trust-signals";
 import StorytellingSection from "@/components/storytelling-section";
 import ProductShowcase from "@/components/product-showcase";
-import FeaturedProduct from "@/components/featured-product";
+import FeaturedProductSimple from "@/components/featured-product-simple";
 import TestimonialsSection from "@/components/testimonials";
 import ComingSoonSection from "@/components/coming-soon-section";
 import TrustSection from "@/components/trust-section";
@@ -20,13 +20,13 @@ export default function Home() {
         <TrustSignals />
         <StorytellingSection />
         <ProductShowcase />
-        <FeaturedProduct />
+        <FeaturedProductSimple />
         <TestimonialsSection />
         <ComingSoonSection />
         <TrustSection />
       </main>
       <SocialProofWidget />
-      <NewsletterPopup />
+      {/* <NewsletterPopup /> */}
       <Footer />
     </>
   );

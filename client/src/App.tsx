@@ -3,6 +3,7 @@ import { queryClient } from "./lib/queryClient";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { CartProvider } from "@/hooks/use-cart";
 import { SubtleBackground, ParticleOverlay } from "@/components/subtle-background";
 import { useSubtleParticles } from "@/hooks/use-subtle-particles";
 import { SmoothScrollContainer } from "@/components/parallax-section";
@@ -75,14 +76,16 @@ function App() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <TooltipProvider>
-        <SmoothScrollContainer>
-          <SubtleBackground />
-          <Toaster />
-          <Router />
-          <ParticleOverlay particles={particles} />
-        </SmoothScrollContainer>
-      </TooltipProvider>
+      <CartProvider>
+        <TooltipProvider>
+          <SmoothScrollContainer>
+            <SubtleBackground />
+            <Toaster />
+            <Router />
+            <ParticleOverlay particles={particles} />
+          </SmoothScrollContainer>
+        </TooltipProvider>
+      </CartProvider>
     </QueryClientProvider>
   );
 }

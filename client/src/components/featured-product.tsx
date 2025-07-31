@@ -7,10 +7,12 @@ import { Label } from "@/components/ui/label";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { useToast } from "@/hooks/use-toast";
+import { useCart } from "@/hooks/use-cart";
 import { useQuery } from "@tanstack/react-query";
 import { getProducts } from "@/lib/shopify";
 import { useSubtleParticles } from "@/hooks/use-subtle-particles";
 import { FadeInSection, ScaleOnHover } from "./page-transition";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { cn } from "@/lib/utils";
 import productImagePath from "@assets/Produktbild-schwarzer-Strohhalm_1753910576700.jpg";
 
@@ -31,7 +33,13 @@ export default function FeaturedProduct() {
   const [currentThumbnailIndex, setCurrentThumbnailIndex] = useState(0);
   const thumbnailScrollRef = useRef<HTMLDivElement>(null);
   const { toast } = useToast();
+  const { addToCart } = useCart();
   const { spawnParticle } = useSubtleParticles();
+
+  // Parallax scroll effects for product section
+  const { scrollY } = useScroll();
+  const productImageY = useTransform(scrollY, [600, 1400], [100, -100]);
+  const productTextY = useTransform(scrollY, [600, 1400], [0, -50]);
 
   // Fetch real Shopify products
   const { data: products = [], isLoading, error } = useQuery({
@@ -47,13 +55,13 @@ export default function FeaturedProduct() {
     if (product && product.availableColors?.length > 0) {
       const defaultColor = product.defaultColor || product.availableColors[0];
       setSelectedColor(defaultColor);
-      
+
       // Find first variant for the default color
       const colorVariants = product.colorVariants[defaultColor];
       if (colorVariants?.length > 0) {
         setSelectedVariant(colorVariants[0]);
       }
-      
+
       // Set current image from product images
       if (product.images?.length > 0) {
         setCurrentImage(product.images[0].url);
@@ -67,14 +75,14 @@ export default function FeaturedProduct() {
       const colorVariants = product.colorVariants[selectedColor];
       const variant = colorVariants[0];
       setSelectedVariant(variant);
-      
+
       // Find the corresponding thumbnail index
       const thumbnails = getThumbnailGallery();
       const thumbnailIndex = thumbnails.findIndex(t => t.color === selectedColor);
       if (thumbnailIndex !== -1) {
         setCurrentThumbnailIndex(thumbnailIndex);
       }
-      
+
       // Smooth image transition
       setImageTransition(true);
       setTimeout(() => {
@@ -93,9 +101,9 @@ export default function FeaturedProduct() {
   // Create thumbnail gallery data from variants and product images
   const getThumbnailGallery = (): ThumbnailItem[] => {
     if (!product) return [];
-    
+
     const thumbnails: ThumbnailItem[] = [];
-    
+
     // Add variant images first (each color variant)
     if (product.availableColors && product.colorVariants) {
       product.availableColors.forEach((color: string) => {
@@ -115,7 +123,7 @@ export default function FeaturedProduct() {
         }
       });
     }
-    
+
     // Add additional product images
     if (product.images) {
       product.images.forEach((image: any, index: number) => {
@@ -133,7 +141,7 @@ export default function FeaturedProduct() {
         }
       });
     }
-    
+
     return thumbnails;
   };
 
@@ -142,10 +150,10 @@ export default function FeaturedProduct() {
   // Scroll thumbnail gallery
   const scrollThumbnails = (direction: 'left' | 'right') => {
     if (!thumbnailScrollRef.current) return;
-    
+
     const container = thumbnailScrollRef.current;
     const scrollAmount = 200; // Adjust based on thumbnail width
-    
+
     if (direction === 'left') {
       container.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
     } else {
@@ -156,18 +164,18 @@ export default function FeaturedProduct() {
   // Handle thumbnail click
   const handleThumbnailClick = (thumbnail: ThumbnailItem, index: number) => {
     setCurrentThumbnailIndex(index);
-    
+
     // Smooth image transition
     setImageTransition(true);
     setTimeout(() => {
       setCurrentImage(thumbnail.url);
-      
+
       // If it's a variant thumbnail, also update the selected color
       if (thumbnail.type === 'variant' && thumbnail.color) {
         setSelectedColor(thumbnail.color);
         setSelectedVariant(thumbnail.variant);
       }
-      
+
       setImageTransition(false);
     }, 150);
   };
@@ -180,7 +188,7 @@ export default function FeaturedProduct() {
     { icon: Palette, label: `${product?.availableColors?.length || 0} Farben`, tooltip: "Verschiedene Farben verfügbar" }
   ];
 
-  // Color mapping for visual color indicators
+  // Color mapping for visual color indicators - Updated for Shopify variants
   const colorMapping: { [key: string]: string } = {
     'Black': '#000000',
     'Schwarz': '#000000',
@@ -195,18 +203,44 @@ export default function FeaturedProduct() {
     'Yellow': '#EAB308',
     'Gelb': '#EAB308',
     'Pink': '#EC4899',
-    'Rosa': '#EC4899'
+    'Rosa': '#EC4899',
+    'Purple': '#8B5CF6',
+    'Lila': '#8B5CF6',
+    'Orange': '#F97316',
+    'farbig': '#6B7280',
+    // Shopify-spezifische Varianten
+    '100 Stk. farbig': '#6B7280',
+    '100 Stk. Blau': '#2563EB',
+    '100 Stk. Grün': '#16A34A',
+    '100 Stk. Orange': '#F97316',
+    '100 Stk. Pink': '#EC4899',
+    '100 Stk. Lila': '#8B5CF6',
+    '100 Stk. Rot': '#DC2626',
+    '100 Stk. Gelb': '#EAB308'
   };
 
   const handleAddToCart = (event: React.MouseEvent) => {
+    if (!selectedVariant || !product) {
+      toast({
+        title: "Bitte wählen Sie eine Variante",
+        description: "Wählen Sie eine Farbe aus, bevor Sie das Produkt hinzufügen.",
+        variant: "destructive"
+      });
+      return;
+    }
+
     // Spawn success particles at button location
     const rect = event.currentTarget.getBoundingClientRect();
     spawnParticle(rect.left + rect.width / 2, rect.top + rect.height / 2, 'success');
-    
-    const colorText = selectedColor ? ` in ${selectedColor}` : '';
-    toast({
-      title: "🔥 In den Warenkorb gepackt!",
-      description: `${product?.title || 'CleanSip Strohhalme'}${colorText} - Die Rebellion beginnt!`,
+
+    // Add to cart using the context
+    addToCart({
+      variantId: selectedVariant.id,
+      title: product.title,
+      color: selectedColor,
+      price: selectedVariant.price,
+      image: currentImage || (product.images?.[0]?.url) || '',
+      sku: selectedVariant.sku,
     });
   };
 
@@ -261,8 +295,9 @@ export default function FeaturedProduct() {
     <TooltipProvider>
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Section Header with Brand Typography */}
           <FadeInSection>
-            <div className="text-center mb-20">
+            <div className="text-center mb-16">
               <Badge className="mb-6 bg-brand-primary text-black px-6 py-3 text-sm font-bold">
                 Das Original
               </Badge>
@@ -274,20 +309,18 @@ export default function FeaturedProduct() {
                 <strong className="text-brand-secondary"> Garantiert zuverlässig, garantiert stabil.</strong>
               </p>
             </div>
-          </FadeInSection>
-
-          {/* Main Product Layout - Apple Style */}
+          </FadeInSection>          {/* Main Product Layout with Parallax - Apple Style */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
-            
-            {/* Left Column - Product Images */}
+
+            {/* Left Column - Product Images with Parallax */}
             <FadeInSection delay={0.2}>
-              <div className="space-y-6">
-                
+              <motion.div style={{ y: productImageY }} className="space-y-6">
+
                 {/* Main Product Image Card - Square like Apple */}
                 <Card className="overflow-hidden border-2 border-brand-primary/20 shadow-xl hover:shadow-2xl transition-all duration-500">
                   <CardContent className="p-0 aspect-square relative bg-white">
                     {/* TODO: Replace with your authentic product photo */}
-                    <img 
+                    <img
                       src={currentImage || (product?.images?.[0]?.url) || productImagePath}
                       alt={`${product?.title || 'CleanSip Premium Strohhalme'} - ${selectedColor || ''}`}
                       className={cn(
@@ -295,7 +328,7 @@ export default function FeaturedProduct() {
                         imageTransition ? "opacity-50 scale-105" : "opacity-100 scale-100"
                       )}
                     />
-                    
+
                     {/* Color indicator overlay */}
                     {selectedColor && (
                       <div className="absolute top-4 right-4 bg-brand-primary text-black px-3 py-1.5 rounded-full text-sm font-bold shadow-lg">
@@ -306,7 +339,7 @@ export default function FeaturedProduct() {
                     {/* Lifestyle photo mini-overlay */}
                     {product?.images && product.images.length > 1 && (
                       <div className="absolute bottom-4 left-4 w-16 h-16 rounded-lg overflow-hidden border-2 border-white shadow-lg opacity-80 hover:opacity-100 transition-opacity">
-                        <img 
+                        <img
                           src={product.images[1]?.url || currentImage}
                           alt="Lifestyle"
                           className="w-full h-full object-cover"
@@ -328,7 +361,7 @@ export default function FeaturedProduct() {
                     >
                       <ChevronLeft className="w-4 h-4 text-gray-600" />
                     </Button>
-                    
+
                     <Button
                       variant="ghost"
                       size="icon"
@@ -339,7 +372,7 @@ export default function FeaturedProduct() {
                     </Button>
 
                     {/* Scrollable Thumbnail Container */}
-                    <div 
+                    <div
                       ref={thumbnailScrollRef}
                       className="flex gap-3 overflow-x-auto scrollbar-hide pb-2 px-8 scroll-smooth"
                       style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
@@ -351,24 +384,24 @@ export default function FeaturedProduct() {
                           className={cn(
                             "flex-shrink-0 aspect-square w-20 h-20 rounded-xl overflow-hidden border-2 transition-all duration-300 shadow-md hover:shadow-lg relative group",
                             currentImage === thumbnail.url || currentThumbnailIndex === index
-                              ? 'border-brand-primary shadow-brand-primary/30 shadow-lg' 
+                              ? 'border-brand-primary shadow-brand-primary/30 shadow-lg'
                               : 'border-gray-200 hover:border-brand-primary/50'
                           )}
                         >
                           {/* TODO: Replace with your authentic variant/product thumbnails */}
-                          <img 
+                          <img
                             src={thumbnail.url}
                             alt={thumbnail.alt}
                             className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
                           />
-                          
+
                           {/* Color indicator for variant thumbnails */}
                           {thumbnail.type === 'variant' && thumbnail.color && (
                             <div className="absolute bottom-1 right-1 w-3 h-3 rounded-full border border-white shadow-sm"
-                                 style={{ backgroundColor: colorMapping[thumbnail.color] || '#6B7280' }}
+                              style={{ backgroundColor: colorMapping[thumbnail.color] || '#6B7280' }}
                             />
                           )}
-                          
+
                           {/* Selection indicator */}
                           {(currentImage === thumbnail.url || currentThumbnailIndex === index) && (
                             <div className="absolute inset-0 bg-brand-primary/10 flex items-center justify-center">
@@ -378,7 +411,7 @@ export default function FeaturedProduct() {
                         </button>
                       ))}
                     </div>
-                    
+
                     {/* Scroll indicator dots */}
                     {thumbnailGallery.length > 4 && (
                       <div className="flex justify-center mt-3 gap-1">
@@ -387,8 +420,8 @@ export default function FeaturedProduct() {
                             key={i}
                             className={cn(
                               "w-1.5 h-1.5 rounded-full transition-colors",
-                              Math.floor(currentThumbnailIndex / 4) === i 
-                                ? 'bg-brand-primary' 
+                              Math.floor(currentThumbnailIndex / 4) === i
+                                ? 'bg-brand-primary'
                                 : 'bg-gray-300'
                             )}
                           />
@@ -397,13 +430,13 @@ export default function FeaturedProduct() {
                     )}
                   </div>
                 )}
-              </div>
+              </motion.div>
             </FadeInSection>
 
-            {/* Right Column - Product Details */}
+            {/* Right Column - Product Details with Parallax */}
             <FadeInSection delay={0.4}>
-              <div className="space-y-8 lg:pl-8">
-                
+              <motion.div style={{ y: productTextY }} className="space-y-8 lg:pl-8">
+
                 {/* Product Title - Large and Bold like Apple */}
                 <div>
                   <h3 className="text-3xl lg:text-5xl font-black text-brand-secondary leading-tight mb-4">
@@ -414,41 +447,45 @@ export default function FeaturedProduct() {
                   )}
                 </div>
 
-                {/* Color Variant Selection with Color Circles */}
+                {/* Benutzerfreundliche Farbauswahl */}
                 {product?.availableColors && product.availableColors.length > 1 && (
                   <div className="space-y-4">
-                    <h4 className="text-lg font-semibold text-gray-900">Farbe</h4>
+                    <h4 className="text-lg font-semibold text-gray-900">Farbe wählen</h4>
                     <div className="flex flex-wrap gap-3">
-                      {product.availableColors.map((color: string) => (
-                        <Tooltip key={color}>
-                          <TooltipTrigger asChild>
-                            <button
-                              onClick={() => setSelectedColor(color)}
-                              className={cn(
-                                "flex items-center gap-3 px-4 py-3 rounded-full border-2 transition-all duration-200 hover:scale-105",
-                                selectedColor === color
-                                  ? 'border-brand-primary bg-brand-primary text-black shadow-lg'
-                                  : 'border-gray-300 bg-white text-gray-700 hover:border-brand-primary/50'
-                              )}
-                            >
-                              {/* Color circle indicator */}
-                              <div 
-                                className="w-5 h-5 rounded-full border-2 border-gray-300"
-                                style={{ backgroundColor: colorMapping[color] || '#6B7280' }}
-                              />
-                              <span className="font-medium">{color}</span>
-                            </button>
-                          </TooltipTrigger>
-                          <TooltipContent>
-                            <p>Auswählen: {color}</p>
-                          </TooltipContent>
-                        </Tooltip>
-                      ))}
+                      {product.availableColors.map((color: string) => {
+                        // Extrahiere den sauberen Farbnamen
+                        const cleanColorName = color.replace('100 Stk. ', '').replace('100 Stk.', '').trim();
+                        const displayName = cleanColorName === 'farbig' ? 'Mix' : cleanColorName;
+
+                        return (
+                          <Tooltip key={color}>
+                            <TooltipTrigger asChild>
+                              <button
+                                onClick={() => setSelectedColor(color)}
+                                className={cn(
+                                  "flex items-center gap-3 px-4 py-3 rounded-full border-2 transition-all duration-200 hover:scale-105",
+                                  selectedColor === color
+                                    ? 'border-brand-primary bg-brand-primary text-white shadow-lg'
+                                    : 'border-gray-300 bg-white text-gray-700 hover:border-brand-primary/50'
+                                )}
+                              >
+                                {/* Color circle indicator */}
+                                <div
+                                  className="w-5 h-5 rounded-full border-2 border-gray-300 shadow-sm"
+                                  style={{ backgroundColor: colorMapping[color] || '#6B7280' }}
+                                />
+                                <span className="font-medium">{displayName}</span>
+                              </button>
+                            </TooltipTrigger>
+                            <TooltipContent>
+                              <p>Auswählen: {displayName}</p>
+                            </TooltipContent>
+                          </Tooltip>
+                        );
+                      })}
                     </div>
                   </div>
-                )}
-
-                {/* Large Price - Like Apple */}
+                )}                {/* Large Price - Like Apple */}
                 <div className="py-4">
                   <div className="text-4xl lg:text-6xl font-black text-brand-primary mb-2">
                     CHF {currentPrice.toFixed(2)}
@@ -482,17 +519,17 @@ export default function FeaturedProduct() {
                 {/* Product Description - Minimal */}
                 <div className="prose prose-sm max-w-none text-gray-600">
                   <p className="text-lg leading-relaxed">
-                    Zuverlässige Plastikstrohhalme für alle, die keine Kompromisse eingehen. 
+                    Zuverlässige Plastikstrohhalme für alle, die keine Kompromisse eingehen.
                     Während Papier-Alternativen versagen, bleiben CleanSip Strohhalme stabil.
                   </p>
                 </div>
 
                 {/* CTA Button */}
                 <div className="pt-4">
-                  <Button 
+                  <Button
                     onClick={handleAddToCart}
                     size="lg"
-                    className="w-full bg-brand-primary hover:bg-brand-primary/90 text-black font-bold text-lg px-8 py-4 rounded-full shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105"
+                    className="w-full bg-brand-primary hover:bg-brand-primary/90 text-white font-bold text-lg px-8 py-4 rounded-full shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105"
                   >
                     <ShoppingCart className="mr-3 h-6 w-6" />
                     Jetzt zurückholen
@@ -517,14 +554,14 @@ export default function FeaturedProduct() {
                     </span>
                   </div>
                 )}
-              </div>
+              </motion.div>
             </FadeInSection>
           </div>
 
           {/* Additional Product Info */}
           {product?.description && (
             <div className="mt-16 max-w-4xl mx-auto">
-              <div 
+              <div
                 className="prose prose-lg mx-auto text-gray-700"
                 dangerouslySetInnerHTML={{ __html: product.descriptionHtml || product.description }}
               />

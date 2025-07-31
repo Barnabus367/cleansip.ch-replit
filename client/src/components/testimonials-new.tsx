@@ -6,28 +6,28 @@ const testimonials = [
     {
         name: "Marco S.",
         location: "Zürich",
-        role: "Gastronom",
-        text: "Endlich Strohhalme, die den ganzen Abend halten. Meine Gäste sind zufrieden und ich spare mir peinliche Situationen.",
+        role: "Barkeeper, Kronenhalle",
+        text: "Endlich Strohhalme, die einen ganzen Mojito überleben. Meine Gäste fragen sogar nach der Marke.",
         rating: 5,
-        avatar: "MS",
+        avatar: "🍸",
         verified: true
     },
     {
         name: "Sandra M.",
         location: "Basel",
         role: "Event-Managerin",
-        text: "Bei unseren Firmenfeiern setzen wir auf CleanSip. Funktioniert einfach - keine Reklamationen mehr.",
+        text: "Nach 200+ Events kann ich sagen: CleanSip rettet den Ruf. Nie wieder peinliche Papier-Desaster.",
         rating: 5,
-        avatar: "SM",
+        avatar: "🎉",
         verified: true
     },
     {
         name: "Thomas K.",
         location: "Bern",
         role: "Familienvater",
-        text: "Qualität, die hält was sie verspricht. Unsere Kinder können endlich wieder entspannt trinken.",
+        text: "Kindergeburtstag ohne Drama. Diese Strohhalme überleben sogar meine Zwillinge.",
         rating: 5,
-        avatar: "TK",
+        avatar: "👨‍👧‍👦",
         verified: true
     }
 ];
@@ -114,7 +114,7 @@ export default function TestimonialsSection() {
 
                                 {/* Customer Info Header */}
                                 <div className="flex items-center mb-6">
-                                    <div className="w-16 h-16 bg-gradient-to-br from-brand-primary/20 to-brand-secondary/20 rounded-2xl flex items-center justify-center text-sm font-bold text-brand-secondary mr-4 shadow-inner border-2 border-gray-100">
+                                    <div className="w-16 h-16 bg-gradient-to-br from-brand-primary/20 to-brand-secondary/20 rounded-2xl flex items-center justify-center text-3xl mr-4 shadow-inner">
                                         {testimonial.avatar}
                                     </div>
                                     <div className="flex-1">
