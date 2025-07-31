@@ -29,8 +29,7 @@ export function optimizeImage(src: string, width?: number, quality = 85): string
 // Preload critical resources
 export function preloadCriticalResources() {
   const criticalResources = [
-    '/fonts/inter-var.woff2',
-    // Add other critical resources
+    // Font preloading removed - fonts are handled by CSS
   ];
   
   criticalResources.forEach(resource => {
