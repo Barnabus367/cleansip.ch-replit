@@ -147,7 +147,7 @@ export default function Product() {
               {/* Thumbnail Grid */}
               {productImages.length > 1 && (
                 <div className="grid grid-cols-4 gap-4 mt-8">
-                  {productImages.map((image, index) => (
+                  {productImages.map((image: any, index: number) => (
                     <motion.button
                       key={image.id}
                       whileHover={{ scale: 0.95 }}

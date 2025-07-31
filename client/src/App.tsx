@@ -32,14 +32,14 @@ function Router() {
       <Route path="/product/:handle">
         {() => (
           <PageTransition>
-            <ProductAwwwards />
+            <Product />
           </PageTransition>
         )}
       </Route>
       <Route path="/category/strohhalme">
         {() => (
           <PageTransition>
-            <ProductAwwwards />
+            <Product />
           </PageTransition>
         )}
       </Route>

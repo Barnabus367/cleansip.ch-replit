@@ -1,7 +1,6 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 import { useInView } from "react-intersection-observer";
-import { Badge } from "@/components/ui/badge";
 import storytellingImagePath from "@assets/pexels-davidmceachan-90911_1753910576699.jpg";
 
 export default function StorytellingSection() {
@@ -91,7 +90,7 @@ export default function StorytellingSection() {
               transition={{ duration: 0.8, delay: 0.3 }}
               className="mt-12 flex flex-wrap gap-4"
             >
-              {["100% Zuverlässig", "Swiss Made", "Keine Aufweichung"].map((value, index) => (
+              {["100% Zuverlässig", "Swiss Made", "Keine Aufweichung"].map((value) => (
                 <div
                   key={value}
                   className="bg-[#0A0A0A]/5 px-6 py-3 rounded-full"
@@ -169,7 +168,7 @@ export default function StorytellingSection() {
             { number: "10K+", label: "Zufriedene Kunden" },
             { number: "100%", label: "Plastik, 100% Legal" },
             { number: "21cm", label: "Perfekte Länge" },
-          ].map((stat, index) => (
+          ].map((stat) => (
             <div key={stat.label} className="text-center">
               <div className="type-display-2 font-black text-[#0A0A0A]">
                 {stat.number}

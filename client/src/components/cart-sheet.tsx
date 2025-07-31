@@ -4,7 +4,7 @@ import { X, Plus, Minus, ShoppingBag, ArrowRight } from "lucide-react";
 import { useCart } from "@/hooks/use-cart";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 
 export function CartSheet({ children }: { children: React.ReactNode }) {
   const { cartItems, cartTotal, updateQuantity, removeFromCart, isOpen, setIsOpen } = useCart();
